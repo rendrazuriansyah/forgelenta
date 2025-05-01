@@ -1,3 +1,4 @@
+// database/migrations/2025_05_01_132809_create_forgelenta.php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('status');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->date('hire_date');
             $table->foreignId('department_id')->constrained('departments');
             $table->foreignId('role_id')->constrained('roles');
-            $table->string('status');
+            $table->enum('status', ['active', 'inactive', 'on_leave'])->default('active');
             $table->decimal('salary', 10, 2);
             $table->timestamps();
             $table->softDeletes();
@@ -51,12 +52,12 @@ return new class extends Migration
             // assigned_to is employee_id
             $table->foreignId('assigned_to')->constrained('employees');
             $table->date('due_date');
-            $table->string('status');
+            $table->enum('status', ['pending', 'in progress', 'completed', 'overdue'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('payroll', function (Blueprint $table) {
+        Schema::create('payrolls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees');
             $table->decimal('salary', 10, 2);
@@ -66,18 +67,19 @@ return new class extends Migration
             $table->date('pay_date');
             $table->timestamps();
             $table->softDeletes();
-            $table->index('employee_id'); // Added: Index for employee_id
+            $table->index('employee_id');
         });
 
         Schema::create('presences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees');
-            $table->date('check_in');
-            $table->date('check_out');
-            $table->string('status');
+            $table->dateTime('check_in');
+            $table->dateTime('check_out')->nullable();
+            $table->date('date');
+            $table->enum('status', ['present', 'absent', 'late', 'early_leave'])->default('absent');
             $table->timestamps();
             $table->softDeletes();
-            $table->index('employee_id'); // Added: Index for employee_id
+            $table->index('employee_id');
         });
 
         Schema::create('leave_requests', function (Blueprint $table) {
@@ -86,10 +88,10 @@ return new class extends Migration
             $table->string('leave_type');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('status');
+            $table->enum('status', ['pending', 'approved', 'rejected', 'cancelled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
-            $table->index('employee_id'); // Added: Index for employee_id
+            $table->index('employee_id');
         });
     }
 
@@ -102,7 +104,7 @@ return new class extends Migration
         Schema::dropIfExists('roles');
         Schema::dropIfExists('employees');
         Schema::dropIfExists('tasks');
-        Schema::dropIfExists('payroll');
+        Schema::dropIfExists('payrolls');
         Schema::dropIfExists('presences');
         Schema::dropIfExists('leave_requests');
     }
