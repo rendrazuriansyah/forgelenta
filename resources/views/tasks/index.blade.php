@@ -27,31 +27,47 @@
         </div>
         <section class="section">
             <div class="card">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <h5 class="card-title">
                         Data.
                     </h5>
+                </div> --}}
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">
+                        Task Management
+                    </h5>
+                    <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-circle bi-middle"></i> Create Task
+                    </a>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex">
-                        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-4 ms-auto">New Task</a>
-                    </div>
+                <div class="card-body class="text-nowrap"">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success" id="success-alert">
+                            {{ session('success') }}
+                        </div>
+                        <script>
+                            setTimeout(function() {
+                                document.getElementById('success-alert').style.display = 'none';
+                            }, 5000);
+                        </script>
+                    @endif
                     <table class="table table-striped" id="table1">
-                        <thead>
+                        <thead class="text-nowrap">
                             <tr>
                                 <th>Title</th>
                                 <th>Assigned To</th>
-                                <th>Due Date</th>
+                                <th>Due Datetime</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-nowrap">
+
                             @foreach ($tasks as $task)
                                 <tr>
                                     <td>{{ $task->title }}</td>
                                     <td>{{ $task->employee->fullname }}</td>
-                                    <td>{{ $task->due_datetime }}</td>
+                                    <td>{{ $task->due_datetime->format('Y-m-d H:i') }}</td>
 
                                     <td>
                                         @if ($task->status == 'pending')
@@ -71,23 +87,22 @@
                                         <a href="" class="btn btn-danger btn-sm">Delete</a>
 
                                         @if ($task->status == 'pending')
-                                            <a href="" class="btn btn-primary btn-sm mb-1">Mark as in
+                                            <a href="" class="btn btn-primary btn-sm">Mark as in
                                                 Progress</a>
-                                            <a href="" class="btn btn-success btn-sm mb-1">Mark as Completed</a>
+                                            <a href="" class="btn btn-success btn-sm">Mark as Completed</a>
                                         @elseif ($task->status == 'in progress')
-                                            <a href="" class="btn btn-secondary btn-sm mb-1">Mark as Pending</a>
-                                            <a href="" class="btn btn-success btn-sm mb-1">Mark as Completed</a>
+                                            <a href="" class="btn btn-secondary btn-sm">Mark as Pending</a>
+                                            <a href="" class="btn btn-success btn-sm">Mark as Completed</a>
                                         @elseif ($task->status == 'completed')
-                                            <a href="" class="btn btn-secondary btn-sm mb-1">Mark as Pending</a>
-                                            <a href="" class="btn btn-primary btn-sm mb-1">Mark as in
+                                            <a href="" class="btn btn-secondary btn-sm">Mark as Pending</a>
+                                            <a href="" class="btn btn-primary btn-sm">Mark as in
                                                 Progress</a>
                                         @elseif ($task->status == 'overdue')
-                                            <a href="" class="btn btn-secondary btn-sm mb-1">Mark as Pending</a>
-                                            <a href="" class="btn btn-primary btn-sm mb-1">Mark as in
+                                            <a href="" class="btn btn-secondary btn-sm">Mark as Pending</a>
+                                            <a href="" class="btn btn-primary btn-sm">Mark as in
                                                 Progress</a>
-                                            <a href="" class="btn btn-success btn-sm mb-1">Mark as Completed</a>
+                                            <a href="" class="btn btn-success btn-sm">Mark as Completed</a>
                                         @endif
-
                                     </td>
                                 </tr>
                             @endforeach
@@ -95,7 +110,6 @@
                     </table>
                 </div>
             </div>
-
         </section>
     </div>
 @endsection

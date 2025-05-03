@@ -22,4 +22,19 @@ class TaskController extends Controller
 
         return view('tasks.create', compact('employees', 'statusOptions'));
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:64',
+            'description' => 'nullable|max:255',
+            'assigned_to' => 'required|exists:employees,id',
+            'due_datetime' => 'required',
+            'status' => 'required',
+        ]);
+
+        $task = Task::create($validatedData);
+
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
+    }
 }

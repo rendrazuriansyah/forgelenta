@@ -27,16 +27,12 @@
         </div>
         <section class="section">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title">
-                        Data.
+                        Create Task
                     </h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex">
-                        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-4 ms-auto">New Task</a>
-                    </div>
-
                     <form action="{{ route('tasks.store') }}" method="post">
                         @csrf
                         <div class="mb-4">
