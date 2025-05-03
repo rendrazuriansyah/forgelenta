@@ -17,6 +17,10 @@
     <link rel="stylesheet" crossorigin href="{{ asset('mazer/assets/compiled/css/app.css') }}">
     <link rel="stylesheet" crossorigin href="{{ asset('mazer/assets/compiled/css/app-dark.css') }}">
     <link rel="stylesheet" crossorigin href="{{ asset('mazer/assets/compiled/css/iconly.css') }}">
+
+    {{-- script untuk handle datatables --}}
+    <link rel="stylesheet" crossorigin href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
 </head>
 
 <body>
@@ -218,6 +222,9 @@
     <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script>
 
+    {{-- script untuk handle datatables --}}
+    <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
 </body>
 
 </html>
