@@ -29,23 +29,29 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title">
-                        Create Task
+                        Edit Task
                     </h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('tasks.store') }}" method="post">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('tasks.update', $task) }}" method="post">
                         @csrf
+                        @method('put')
                         <div class="mb-4">
                             <label for="" class="form-label">Title</label>
                             <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                                value="{{ old('title') }}" required>
+                                value="{{ old('title', $task->title) }}" required>
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-4">
                             <label for="" class="form-label">Description</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3">{{ old('description') }}</textarea>
+                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3">{{ old('description', $task->description) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -57,7 +63,7 @@
                                 <option value="">Select Employee</option>
                                 @foreach ($employees as $employee)
                                     <option value="{{ $employee->id }}"
-                                        {{ old('assigned_to') == $employee->id ? 'selected' : '' }}>
+                                        {{ old('assigned_to', $task->assigned_to) == $employee->id ? 'selected' : '' }}>
                                         {{ $employee->fullname }}
                                     </option>
                                 @endforeach
@@ -70,8 +76,8 @@
                             <label for="" class="form-label">Due Datetime</label>
                             <input type="datetime-local"
                                 class="form-control flatpickr-no-config @error('due_datetime') is-invalid @enderror"
-                                name="due_datetime" value="{{ old('due_datetime') }}" placeholder="yyyy-mm-dd hh:mm"
-                                required>
+                                name="due_datetime" value="{{ old('due_datetime', $task->due_datetime) }}"
+                                placeholder="yyyy-mm-dd hh:mm" required>
                             @error('due_datetime')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -80,7 +86,8 @@
                             <label for="" class="form-label">Status</label>
                             <select class="form-select @error('status') is-invalid @enderror" name="status" required>
                                 @foreach ($statusOptions as $option)
-                                    <option value="{{ $option }}" {{ old('status') == $option ? 'selected' : '' }}>
+                                    <option value="{{ $option }}"
+                                        {{ old('status', $task->status) == $option ? 'selected' : '' }}>
                                         {{ ucfirst($option) }}</option>
                                 @endforeach
                             </select>
@@ -89,7 +96,7 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create Task</button>
+                        <button type="submit" class="btn btn-primary">Update Task</button>
                         <a href="javascript:history.back()" class="btn btn-secondary">Back to List</a>
                     </form>
                 </div>

@@ -18,8 +18,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page""><a
-                                    href="{{ route('tasks.index') }}">Tasks</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tasks</li>
                         </ol>
                     </nav>
                 </div>
@@ -40,8 +39,8 @@
                         <i class="bi bi-plus-circle bi-middle"></i> Create Task
                     </a>
                 </div>
-                <div class="card-body class="text-nowrap"">
-                    @if (session()->has('success'))
+                <div class="card-body">
+                    @if (session('success'))
                         <div class="alert alert-success" id="success-alert">
                             {{ session('success') }}
                         </div>
@@ -83,7 +82,8 @@
 
                                     <td>
                                         <a href="" class="btn btn-info btn-sm">View</a>
-                                        <a href="" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
+                                            class="btn btn-warning btn-sm">Edit</a>
                                         <a href="" class="btn btn-danger btn-sm">Delete</a>
 
                                         @if ($task->status == 'pending')

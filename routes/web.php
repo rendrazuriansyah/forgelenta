@@ -10,6 +10,28 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Resource Route Explained
+|--------------------------------------------------------------------------
+|
+| Baris di bawah ini pake fitur 'Route::resource' dari framework (ini contoh Laravel).
+| 'Route::resource' ini otomatis generate BANYAK route CRUD standar
+| (index, create, store, show, edit, UPDATE, destroy)
+| buat resource '/tasks' yang dihandle sama 'TaskController'.
+|
+| Jadi, satu baris ini setara sama nulis route manual buat:
+| GET        /tasks                 -> index
+| POST       /tasks                 -> store
+| GET        /tasks/{task}          -> show
+| GET        /tasks/{task}/edit     -> edit
+| PUT/PATCH  /tasks/{task}          -> update   <-- Nah, action UPDATE ini di-handle pake PUT/PATCH
+| DELETE     /tasks/{task}          -> destroy
+|
+| Ini bikin code routing lebih ringkas & konsisten ngikutin standar RESTful.
+|
+*/
 Route::resource('/tasks', TaskController::class);
 
 Route::middleware('auth')->group(function () {
@@ -18,4 +40,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

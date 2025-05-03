@@ -37,4 +37,27 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
+
+    public function edit(Task $task)
+    {
+        $employees = Employee::all();
+        $statusOptions = Task::getStatusOptions();
+
+        return view('tasks.edit', compact('task', 'employees', 'statusOptions'));
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:64',
+            'description' => 'nullable|max:255',
+            'assigned_to' => 'required|exists:employees,id',
+            'due_datetime' => 'required',
+            'status' => 'required',
+        ]);
+
+        $task->update($validatedData);
+
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+    }
 }
