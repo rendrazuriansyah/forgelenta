@@ -10,9 +10,14 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'assigned_to', 'due_date', 'status'];
+    protected $fillable = ['title', 'description', 'assigned_to', 'due_datetime', 'status'];
 
     public function employee() {
         return $this->belongsTo(Employee::class, 'assigned_to');
+    }
+
+    public static function getStatusOptions(): array
+    {
+        return ['pending', 'in progress', 'completed', 'overdue'];
     }
 }

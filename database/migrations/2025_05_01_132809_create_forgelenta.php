@@ -51,7 +51,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             // assigned_to is employee_id
             $table->foreignId('assigned_to')->constrained('employees');
-            $table->date('due_date');
+            $table->datetime('due_datetime');
             $table->enum('status', ['pending', 'in progress', 'completed', 'overdue'])->default('pending');
             $table->timestamps();
             $table->softDeletes();

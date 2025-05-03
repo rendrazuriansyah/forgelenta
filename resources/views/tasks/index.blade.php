@@ -18,8 +18,8 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Tasks</li>
-                            <li class="breadcrumb-item active" aria-current="page">Index</li>
+                            <li class="breadcrumb-item active" aria-current="page""><a
+                                    href="{{ route('tasks.index') }}">Tasks</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex">
-                        <a href="" class="btn btn-primary mb-2 ms-auto">New Task</a>
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-4 ms-auto">New Task</a>
                     </div>
                     <table class="table table-striped" id="table1">
                         <thead>
@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{ $task->title }}</td>
                                     <td>{{ $task->employee->fullname }}</td>
-                                    <td>{{ $task->due_date }}</td>
+                                    <td>{{ $task->due_datetime }}</td>
 
                                     <td>
                                         @if ($task->status == 'pending')

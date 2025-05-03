@@ -21,6 +21,9 @@
     {{-- script untuk handle datatables --}}
     <link rel="stylesheet" crossorigin href="{{ asset('mazer/assets/compiled/css/table-datatable.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
+
+    {{-- script untuk handle date picker --}}
+    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.css') }}">
 </head>
 
 <body>
@@ -115,7 +118,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('tasks.index') }}" class='sidebar-link'>
                                 <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
                             </a>
                         </li>
@@ -225,6 +228,10 @@
     {{-- script untuk handle datatables --}}
     <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
+
+    {{-- script untuk handle date picker --}}
+    <script src="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('mazer/assets/static/js/pages/date-picker.js') }}"></script>
 </body>
 
 </html>

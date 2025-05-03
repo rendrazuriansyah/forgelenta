@@ -79,13 +79,13 @@ class ForgeLentaSeeder extends Seeder
         $employee_ids = DB::table('employees')->pluck('id')->toArray();
         for ($i = 0; $i < 150; $i++) {
             $assigned_to = $faker->randomElement($employee_ids);
-            $due_date = Carbon::now()->addDays($faker->numberBetween(1, 60));
+            $due_datetime = Carbon::now()->addDays($faker->numberBetween(1, 60))->addHours($faker->numberBetween(0, 23))->addMinutes($faker->numberBetween(0, 59));
 
             DB::table('tasks')->insert([
                 'title' => $faker->sentence(3),
                 'description' => $faker->paragraph(),
                 'assigned_to' => $assigned_to,
-                'due_date' => $due_date,
+                'due_datetime' => $due_datetime,
                 'status' => $faker->randomElement(['pending', 'in progress', 'completed', 'overdue']),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
