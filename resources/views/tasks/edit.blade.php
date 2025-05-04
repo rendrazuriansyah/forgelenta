@@ -19,7 +19,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tasks.index') }}">Tasks</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
                     </nav>
                 </div>

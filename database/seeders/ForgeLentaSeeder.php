@@ -53,7 +53,7 @@ class ForgeLentaSeeder extends Seeder
         }
 
         // Employees
-        for ($i = 0; $i < 75; $i++) {
+        for ($i = 0; $i < 16; $i++) {
             $department_id = $faker->numberBetween(1, count($departments));
             $role_id = $faker->numberBetween(1, count($roles));
             $hire_date = $faker->dateTimeBetween('-5 years', 'now');
@@ -77,7 +77,7 @@ class ForgeLentaSeeder extends Seeder
 
         // Tasks
         $employee_ids = DB::table('employees')->pluck('id')->toArray();
-        for ($i = 0; $i < 150; $i++) {
+        for ($i = 0; $i < 32; $i++) {
             $assigned_to = $faker->randomElement($employee_ids);
             $due_datetime = Carbon::now()->addDays($faker->numberBetween(1, 60))->addHours($faker->numberBetween(0, 23))->addMinutes($faker->numberBetween(0, 59));
 
@@ -141,7 +141,7 @@ class ForgeLentaSeeder extends Seeder
 
         // Leave Requests
         $leave_types = ['Sick Leave', 'Vacation', 'Personal Leave', 'Maternity Leave', 'Paternity Leave'];
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             $employee_id = $faker->randomElement($employee_ids);
             $leave_type = $faker->randomElement($leave_types);
             $start_date = Carbon::now()->addDays($faker->numberBetween(1, 120));

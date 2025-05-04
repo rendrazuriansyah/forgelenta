@@ -39,7 +39,8 @@
                                     alt="Logo" srcset="">
                             </a>
                         </div>
-                        <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                        <div class="theme-toggle d-flex  align-items-center mt-2">
+
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
                                 height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
@@ -57,11 +58,15 @@
                                     </g>
                                 </g>
                             </svg>
-                            <div class="form-check form-switch fs-6">
-                                <input class="form-check-input  me-0" type="checkbox" id="toggle-dark"
+
+                            <!-- Dark mode toggle -->
+                            <div class="form-check form-switch fs-6 ms-2 mt-1">
+                                <input class="form-check-input me-0" type="checkbox" id="toggle-dark"
                                     style="cursor: pointer">
                                 <label class="form-check-label"></label>
                             </div>
+                            <!-- Dark mode toggle end -->
+
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" class="iconify iconify--mdi" width="20"
                                 height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
@@ -70,11 +75,14 @@
                                 </path>
                             </svg>
                         </div>
+
+                        <!-- Fullscreen toggle -->
                         <div class="sidebar-toggler  x">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle">
                                 </i>
                             </a>
                         </div>
+                        <!-- Fullscreen toggle end -->
                     </div>
                 </div>
                 <div class="sidebar-menu">
@@ -213,16 +221,15 @@
             </footer>
         </div>
     </div>
+
     <script src="{{ asset('mazer/assets/static/js/components/dark.js') }}"></script>
     <script src="{{ asset('mazer/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-
-
     <script src="{{ asset('mazer/assets/compiled/js/app.js') }}"></script>
-
-
 
     <!-- Need: Apexcharts -->
     <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
+
+    {{-- Ensure the dashboard.js is loaded after the apexcharts.min.js --}}
     <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script>
 
     {{-- script untuk handle datatables --}}
