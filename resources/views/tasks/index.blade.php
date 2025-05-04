@@ -87,7 +87,7 @@
                                         <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}" method="post" class="d-inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">Delete</button>
                                         </form>
 
                                         @if ($task->status == 'pending')
