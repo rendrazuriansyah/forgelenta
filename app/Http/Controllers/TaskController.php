@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Task;
 use App\Models\Employee;
+use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        // $tasks = Task::all();
+        $tasks = Task::with('employee')->get();
 
         return view('tasks.index', compact('tasks'));
     }
