@@ -76,17 +76,32 @@
 
                                     <td>
                                         @if ($employee->status == 'active')
-                                            <span class="badge bg-light-success">{{ $employee->status }}</span>
+                                            <span class="badge bg-success">{{ $employee->status }}</span>
                                         @elseif ($employee->status == 'on_leave')
-                                            <span class="badge bg-light-secondary">{{ $employee->status }}</span>
+                                            <span class="badge bg-secondary">{{ $employee->status }}</span>
                                         @elseif ($employee->status == 'inactive')
-                                            <span class="badge bg-light-danger">{{ $employee->status }}</span>
+                                            <span class="badge bg-danger">{{ $employee->status }}</span>
                                         @endif
                                     </td>
 
                                     <td>{{ number_format($employee->salary, 2) }}</td>
 
-                                    <td>ini ntar ada buttonnya</td>
+                                    <td>
+                                        <a href="{{ route('employees.show', ['employee' => $employee->id]) }}"
+                                            class="btn btn-info btn-sm">View</a>
+                                        <a href="{{ route('employees.edit', ['employee' => $employee->id]) }}"
+                                            class="btn btn-warning btn-sm">Edit</a>
+                                        <form action="{{ route('employees.destroy', ['employee' => $employee->id]) }}"
+                                            method="post" class="d-inline-block">
+                                            @csrf
+                                            @method('delete')
+
+                                            <button
+                                                onclick="return confirm('Are you sure you want to delete this employee?')"
+                                                type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

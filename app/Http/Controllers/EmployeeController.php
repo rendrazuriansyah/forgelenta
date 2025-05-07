@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Employee;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -12,5 +12,11 @@ class EmployeeController extends Controller
         $employees = Employee::with('role')->get();
 
         return view('employees.index', compact('employees'));
+    }
+
+    public function destroy(Request $request, Employee $employee) {
+        $employee->delete();
+
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
     }
 }
