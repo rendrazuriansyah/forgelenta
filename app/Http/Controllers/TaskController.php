@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
@@ -60,6 +61,17 @@ class TaskController extends Controller
         $task->update($validatedData);
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+    }
+
+    public function updateStatus(Request $request, Task $task)
+    {
+        $validatedData = $request->validate([
+            'status' => 'required',
+        ]);
+
+        $task->update($validatedData);
+
+        return redirect()->route('tasks.index')->with('success', 'Task status updated successfully.');
     }
 
     public function destroy(Task $task)
