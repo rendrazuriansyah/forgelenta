@@ -68,23 +68,23 @@
                                     <td>{{ $employee->fullname }}</td>
                                     <td>{{ $employee->email }}</td>
                                     <td>{{ $employee->phone_number }}</td>
+                                    <td>{{ $employee->address }}</td>
                                     <td>{{ $employee->birth_date->format('d-m-Y') }}</td>
                                     <td>{{ $employee->hire_date->format('d-m-Y') }}</td>
                                     <td>{{ $employee->department->name }}</td>
-                                    <td>{{ $employee->role->name }}</td>
-                                    <td>{{ $employee->status }}</td>
+                                    <td>{{ $employee->role->title }}</td>
 
                                     <td>
                                         @if ($employee->status == 'active')
-                                            <span class="badge bg-success">{{ $employee->status }}</span>
-                                        @elseif ($employee->status == 'inactive')
-                                            <span class="badge bg-secondary">{{ $employee->status }}</span>
+                                            <span class="badge bg-light-success">{{ $employee->status }}</span>
                                         @elseif ($employee->status == 'on_leave')
-                                            <span class="badge bg-warning">{{ $employee->status }}</span>
+                                            <span class="badge bg-light-secondary">{{ $employee->status }}</span>
+                                        @elseif ($employee->status == 'inactive')
+                                            <span class="badge bg-light-danger">{{ $employee->status }}</span>
                                         @endif
                                     </td>
 
-                                    <td>{{ $employee->salary }}</td>
+                                    <td>{{ number_format($employee->salary, 2) }}</td>
 
                                     <td>ini ntar ada buttonnya</td>
                                 </tr>

@@ -26,15 +26,16 @@ class Employee extends Model
     protected $casts = [
         'birth_date' => 'date',
         'hire_date' => 'date',
+        'salary' => 'float',
     ];
 
     public function department()
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }
