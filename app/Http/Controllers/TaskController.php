@@ -80,4 +80,11 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
+
+    public function show(Task $task)
+    {
+        $task->all();
+
+        return view('tasks.show', compact('task'));
+    }
 }
