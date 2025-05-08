@@ -24,6 +24,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 |
 | Jadi, satu baris ini setara sama nulis route manual buat:
 | GET        /tasks                 -> index
+| GET        /tasks/create          -> create
 | POST       /tasks                 -> store
 | GET        /tasks/{task}          -> show
 | GET        /tasks/{task}/edit     -> edit

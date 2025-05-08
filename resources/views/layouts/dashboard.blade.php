@@ -258,6 +258,12 @@
     {{-- script untuk handle date picker --}}
     <script src="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/date-picker.js') }}"></script>
+    <script>
+        flatpickr(".flatpickr-input", {
+            enableTime: true,
+            dateFormat: "d-m-Y H:i",
+        });
+    </script>
 </body>
 
 </html>

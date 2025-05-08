@@ -38,4 +38,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public static function getStatusOptions()
+    {
+        return ['active', 'inactive', 'on_leave'];
+    }
 }
