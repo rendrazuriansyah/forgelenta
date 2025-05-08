@@ -50,9 +50,9 @@
                             <tr>
                                 <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Address</th>
-                                <th>Birth Date</th>
+                                {{-- <th>Phone Number</th> --}}
+                                {{-- <th>Address</th> --}}
+                                {{-- <th>Birth Date</th> --}}
                                 <th>Hire Date</th>
                                 <th>Department</th>
                                 <th>Role</th>
@@ -67,9 +67,9 @@
                                 <tr>
                                     <td>{{ $employee->fullname }}</td>
                                     <td>{{ $employee->email }}</td>
-                                    <td>{{ $employee->phone_number }}</td>
-                                    <td>{{ $employee->address }}</td>
-                                    <td>{{ $employee->birth_date->format('d-m-Y') }}</td>
+                                    {{-- <td>{{ $employee->phone_number }}</td> --}}
+                                    {{-- <td>{{ $employee->address }}</td> --}}
+                                    {{-- <td>{{ $employee->birth_date->format('d-m-Y') }}</td> --}}
                                     <td>{{ $employee->hire_date->format('d-m-Y') }}</td>
                                     <td>{{ $employee->department->name }}</td>
                                     <td>{{ $employee->role->title }}</td>

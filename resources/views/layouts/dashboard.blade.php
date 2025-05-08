@@ -235,6 +235,25 @@
     {{-- script untuk handle datatables --}}
     <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
+    {{-- script untuk handle datatables (entries per page) --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let table1 = document.querySelector('#table1');
+            if (table1) {
+                if (window.dataTable) {
+                    window.dataTable.destroy();
+                }
+                window.dataTable = new simpleDatatables.DataTable(table1, {
+                    perPage: 5,
+                });
+                const selector = document.querySelector('.dataTable-selector');
+                if (selector) {
+                    selector.value = '5';
+                    selector.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+    </script>
 
     {{-- script untuk handle date picker --}}
     <script src="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.js') }}"></script>
