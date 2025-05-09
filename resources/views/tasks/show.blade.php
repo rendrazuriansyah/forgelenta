@@ -33,89 +33,40 @@
                     </h5>
                 </div>
 
-
                 <div class="card-body">
-
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Title</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">{{ $task->title }}</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" value="{{ $task->title }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="status" value="{{ ucfirst($task->status) }}"
+                                readonly>
                         </div>
                     </div>
 
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Description</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">{{ $task->description }}</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="assigned_to" class="form-label">Assigned To</label>
+                            <input type="text" class="form-control" id="assigned_to"
+                                value="{{ $task->employee->fullname }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="due_datetime" class="form-label">Due Datetime</label>
+                            <input type="text" class="form-control" id="due_datetime"
+                                value="{{ \Carbon\Carbon::parse($task->due_datetime)->format('d F Y H:i') }}" readonly>
                         </div>
                     </div>
 
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Assigned To</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">{{ $task->employee->fullname }}</p>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" readonly rows="3">{{ $task->description }}</textarea>
                         </div>
-                    </div>
-
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Due Datetime</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">
-                                {{ \Carbon\Carbon::parse($task->due_datetime)->format('d F Y H:i') }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Status</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">
-                                @switch($task->status)
-                                    @case('pending')
-                                        <span class="badge bg-secondary">Pending</span>
-                                    @break
-
-                                    @case('in progress')
-                                        <span class="badge bg-primary">In Progress</span>
-                                    @break
-
-                                    @case('completed')
-                                        <span class="badge bg-success">Completed</span>
-                                    @break
-
-                                    @case('overdue')
-                                        <span class="badge bg-danger">Overdue</span>
-                                    @break
-
-                                    @default
-                                        {{ ucfirst($task->status) }}
-                                @endswitch
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Created At</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">{{ $task->created_at->format('d F Y H:i') }}</p>
-                        </div>
-                    </div>
-
-                    <div class="mb-4 row">
-                        <label class="col-md-4 col-form-label"><strong>Updated At</strong></label>
-                        <div class="col-md-8">
-                            <p class="form-control-plaintext">{{ $task->updated_at->format('d F Y H:i') }}</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-primary">View Assigned Employee</a>
-                        <a href="javascript:history.back()" class="btn btn-secondary">Back to List</a>
                     </div>
                 </div>
-
-
             </div>
-
         </section>
     </div>
 @endsection
