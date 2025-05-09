@@ -11,7 +11,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with('role')->get();
+        $employees = Employee::with('role', 'department')->get();
 
         return view('employees.index', compact('employees'));
     }
@@ -43,6 +43,13 @@ class EmployeeController extends Controller
         $employee = Employee::create($validatedData);
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+    }
+
+    public function show(Employee $employee)
+    {
+        $employee->load('department', 'role');
+
+        return view('employees.show', compact('employee'));
     }
 
     public function destroy(Request $request, Employee $employee)
