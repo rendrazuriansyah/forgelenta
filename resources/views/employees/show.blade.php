@@ -26,84 +26,77 @@
             </div>
         </div>
         <section class="section">
-            <div class="row">
-                <div class="col-12 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-center align-items-center flex-column">
-                                <div class="avatar avatar-2xl">
-                                    <img src="{{ asset('mazer/assets/compiled/jpg/2.jpg') }}" alt="Avatar">
-                                </div>
-
-                                <h3 class="mt-3">{{ $employee->fullname }}</h3>
-                                <p class="text-small">{{ $employee->role->title ?? '-' }} at
-                                    {{ $employee->department->name ?? '-' }}</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">
+                        Detail Employee
+                    </h5>
                 </div>
-                <div class="col-12 col-lg-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="fullname" class="form-label">Fullname</label>
-                                    <input type="text" class="form-control" id="fullname"
-                                        value="{{ $employee->fullname }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="email" value="{{ $employee->email }}"
-                                        readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="phone" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="phone"
-                                        value="{{ $employee->phone_number }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="birthday" class="form-label">Birthday</label>
-                                    <input type="text" class="form-control" id="birthday"
-                                        value="{{ $employee->birth_date ? $employee->birth_date->format('d F Y') : '-' }}"
-                                        readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="gender" class="form-label">Gender</label>
-                                    <input type="text" class="form-control" id="gender"
-                                        value="{{ $employee->gender ?? '-' }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="department" class="form-label">Department</label>
-                                    <input type="text" class="form-control" id="department"
-                                        value="{{ $employee->department->name ?? '-' }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="role" class="form-label">Role</label>
-                                    <input type="text" class="form-control" id="role"
-                                        value="{{ $employee->role->title ?? '-' }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="hire_date" class="form-label">Hire Date</label>
-                                    <input type="text" class="form-control" id="hire_date"
-                                        value="{{ $employee->hire_date ? $employee->hire_date->format('d F Y') : '-' }}"
-                                        readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="salary" class="form-label">Salary</label>
-                                    <input type="text" class="form-control" id="salary"
-                                        value="{{ number_format($employee->salary, 2) }}" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <input type="text" class="form-control" id="status"
-                                        value="{{ ucfirst(str_replace('_', ' ', $employee->status)) ?? '-' }}" readonly>
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                    <label for="address" class="form-label">Address</label>
-                                    <textarea class="form-control" id="address" rows="3" readonly>{{ $employee->address }}</textarea>
-                                </div>
-                            </div>
+                <div class="card-body">
+                    <div class="row">
+                        {{-- Personal Info --}}
+                        <div class="col-md-6 mb-3">
+                            <label for="fullname" class="form-label">Fullname</label>
+                            <input type="text" class="form-control" id="fullname" value="{{ $employee->fullname }}"
+                                readonly>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" value="{{ $employee->email }}"
+                                readonly>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phone" value="{{ $employee->phone_number }}"
+                                readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <input type="text" class="form-control" id="gender" value="{{ $employee->gender ?? '-' }}"
+                                readonly>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="birthday" class="form-label">Birthday</label>
+                            <input type="text" class="form-control" id="birthday"
+                                value="{{ $employee->birth_date ? $employee->birth_date->format('d F Y') : '-' }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="status"
+                                value="{{ ucfirst(str_replace('_', ' ', $employee->status)) ?? '-' }}" readonly>
+                        </div>
+
+                        {{-- Address takes full width --}}
+                        <div class="col-md-12 mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" rows="3" readonly>{{ $employee->address }}</textarea>
+                        </div>
+
+                        {{-- Employment Info --}}
+                        <div class="col-md-6 mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <input type="text" class="form-control" id="department"
+                                value="{{ $employee->department->name ?? '-' }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="role"
+                                value="{{ $employee->role->title ?? '-' }}" readonly>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="hire_date" class="form-label">Hire Date</label>
+                            <input type="text" class="form-control" id="hire_date"
+                                value="{{ $employee->hire_date ? $employee->hire_date->format('d F Y') : '-' }}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="salary" class="form-label">Salary</label>
+                            <input type="text" class="form-control" id="salary"
+                                value="{{ number_format($employee->salary, 2) }}" readonly>
+                        </div>
+
                     </div>
                 </div>
             </div>

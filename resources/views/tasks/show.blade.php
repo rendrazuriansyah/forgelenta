@@ -35,34 +35,37 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        {{-- Title --}}
+                        <div class="col-md-12 mb-3">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" class="form-control" id="title" value="{{ $task->title }}" readonly>
                         </div>
-                        <div class="col-md-6 mb-3">
+
+                        {{-- Description --}}
+                        <div class="col-md-12 mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" readonly rows="3">{{ $task->description }}</textarea>
+                        </div>
+
+                        {{-- Status --}}
+                        <div class="col-md-12 mb-3">
                             <label for="status" class="form-label">Status</label>
                             <input type="text" class="form-control" id="status" value="{{ ucfirst($task->status) }}"
                                 readonly>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
+                        {{-- Assigned To --}}
+                        <div class="col-md-12 mb-3">
                             <label for="assigned_to" class="form-label">Assigned To</label>
                             <input type="text" class="form-control" id="assigned_to"
                                 value="{{ $task->employee->fullname }}" readonly>
                         </div>
-                        <div class="col-md-6 mb-3">
+
+                        {{-- Due Datetime --}}
+                        <div class="col-md-12 mb-3">
                             <label for="due_datetime" class="form-label">Due Datetime</label>
                             <input type="text" class="form-control" id="due_datetime"
                                 value="{{ \Carbon\Carbon::parse($task->due_datetime)->format('d F Y H:i') }}" readonly>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" readonly rows="3">{{ $task->description }}</textarea>
                         </div>
                     </div>
                 </div>
