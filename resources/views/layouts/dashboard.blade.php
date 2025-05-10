@@ -102,7 +102,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('roles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-person-badge-fill"></i> <span>Roles</span>
                             </a>
                         </li>
