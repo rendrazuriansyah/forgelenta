@@ -6,8 +6,16 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Presence;
 
+/**
+ * Controller to manage presences.
+ */
 class PresenceController extends Controller
 {
+    /**
+     * Display a listing of the presences.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('presences.index', [
@@ -15,6 +23,11 @@ class PresenceController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new presence.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $employees = Employee::all();
@@ -22,6 +35,12 @@ class PresenceController extends Controller
         return view('presences.create', compact('employees'));
     }
 
+    /**
+     * Store a newly created presence in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -32,20 +51,45 @@ class PresenceController extends Controller
             'status' => 'required|in:present,absent,late,early_leave',
         ]);
 
-        $presence = Presence::create($validatedData);
+        try {
+            $presence = Presence::create($validatedData);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error creating presence: '.$e->getMessage());
+        }
 
         return redirect()->route('presences.index')->with('success', 'Presence created successfully.');
     }
 
+    /**
+     * Show the form for editing the specified presence.
+     *
+     * @param  \App\Models\Presence  $presence
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Presence $presence)
     {
+        if ($presence === null) {
+            return back()->with('error', 'Presence not found.');
+        }
+
         $employees = Employee::all();
 
         return view('presences.edit', compact('presence', 'employees'));
     }
 
+    /**
+     * Update the specified presence in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Presence  $presence
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Presence $presence)
     {
+        if ($presence === null) {
+            return back()->with('error', 'Presence not found.');
+        }
+
         $validatedData = $request->validate([
             'employee_id' => 'required|exists:employees,id',
             'check_in' => 'required',
@@ -54,15 +98,34 @@ class PresenceController extends Controller
             'status' => 'required|in:present,absent,late,early_leave',
         ]);
 
-        $presence->update($validatedData);
+        try {
+            $presence->update($validatedData);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error updating presence: '.$e->getMessage());
+        }
 
         return redirect()->route('presences.index')->with('success', 'Presence updated successfully.');
     }
 
+    /**
+     * Remove the specified presence from storage.
+     *
+     * @param  \App\Models\Presence  $presence
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Presence $presence)
     {
-        $presence->delete();
+        if ($presence === null) {
+            return back()->with('error', 'Presence not found.');
+        }
+
+        try {
+            $presence->delete();
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error deleting presence: '.$e->getMessage());
+        }
 
         return redirect()->route('presences.index')->with('success', 'Presence deleted successfully.');
     }
 }
+
