@@ -5,19 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Department;
 
+/**
+ * DepartmentController
+ *
+ * @package App\Http\Controllers
+ */
 class DepartmentController extends Controller
 {
+    /**
+     * Display a listing of the departments.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $departments = Department::all();
         return view('departments.index', ['departments' => $departments]);
     }
 
+    /**
+     * Show the form for creating a new department.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('departments.create');
     }
 
+    /**
+     * Store a newly created department in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         try {
@@ -36,11 +57,24 @@ class DepartmentController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified department.
+     *
+     * @param  \App\Models\Department  $department
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Department $department)
     {
         return view('departments.edit', ['department' => $department]);
     }
 
+    /**
+     * Update the specified department in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Department  $department
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Department $department)
     {
         try {
@@ -59,6 +93,12 @@ class DepartmentController extends Controller
         }
     }
 
+    /**
+     * Remove the specified department from storage.
+     *
+     * @param  \App\Models\Department  $department
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Department $department)
     {
         try {
@@ -71,3 +111,4 @@ class DepartmentController extends Controller
         }
     }
 }
+
