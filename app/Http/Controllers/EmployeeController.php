@@ -52,6 +52,35 @@ class EmployeeController extends Controller
         return view('employees.show', compact('employee'));
     }
 
+    public function edit(Request $request, Employee $employee)
+    {
+        $departments = Department::all();
+        $roles = Role::all();
+        $statusOptions = Employee::getStatusOptions();
+
+        return view('employees.edit', compact('employee', 'departments', 'roles', 'statusOptions'));
+    }
+
+    public function update(Request $request, Employee $employee)
+    {
+        $validatedData = $request->validate([
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:employees,email,'.$employee->id.'|max:255',
+            'phone_number' => 'required|string|max:20',
+            'address' => 'required|string',
+            'birth_date' => 'required|date|before_or_equal:hire_date',
+            'hire_date' => 'required|date',
+            'department_id' => 'required|exists:departments,id',
+            'role_id' => 'required|exists:roles,id',
+            'status' => 'required|in:active,inactive,on_leave',
+            'salary' => 'required|numeric|min:0|max:99999999.99',
+        ]);
+
+        $employee->update($validatedData);
+
+        return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
+    }
+
     public function destroy(Request $request, Employee $employee)
     {
         $employee->delete();

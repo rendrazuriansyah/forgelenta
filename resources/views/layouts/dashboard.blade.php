@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/simple-datatables/style.css') }}">
 
     {{-- script untuk handle date picker --}}
-    <link rel="stylesheet" href="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body>
@@ -256,12 +256,20 @@
     </script>
 
     {{-- script untuk handle date picker --}}
-    <script src="{{ asset('mazer/assets/extensions/flatpickr/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('mazer/assets/static/js/pages/date-picker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr(".flatpickr-input", {
-            enableTime: true,
-            dateFormat: "d-m-Y H:i",
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr(".flatpickr-input-date", {
+                altInput: true,
+                altFormat: "j F Y",
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(".flatpickr-input-datetime", {
+                enableTime: true,
+                altInput: true,
+                altFormat: "j F Y H:i",
+                dateFormat: "Y-m-d H:i",
+            });
         });
     </script>
 </body>

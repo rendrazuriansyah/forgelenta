@@ -74,10 +74,9 @@
                         </div>
                         <div class="mb-4">
                             <label for="" class="form-label">Due Datetime</label>
-                            <input type="datetime-local"
-                                class="form-control flatpickr-no-config @error('due_datetime') is-invalid @enderror"
-                                name="due_datetime" value="{{ old('due_datetime', $task->due_datetime) }}"
-                                placeholder="yyyy-mm-dd hh:mm" required>
+                            <input type="text"
+                                class="form-control flatpickr-input-datetime @error('due_datetime') is-invalid @enderror"
+                                name="due_datetime" value="{{ old('due_datetime', $task->due_datetime) }}" required>
                             @error('due_datetime')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -1,3 +1,5 @@
+{{-- {{ dd($employee) }} --}}
+
 @extends('layouts.dashboard')
 
 @section('content')
@@ -19,7 +21,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('employees.index') }}">Employees</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
                         </ol>
                     </nav>
                 </div>
@@ -29,21 +31,27 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title">
-                        Create Employee
+                        Edit Employee
                     </h5>
                 </div>
 
                 <div class="card-body">
-                    <form class="form" action="{{ route('employees.store') }}" method="POST">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <form class="form" action="{{ route('employees.update', ['employee' => $employee->id]) }}"
+                        method="POST">
                         @csrf
-                        @method('POST')
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="full-name" class="form-label">Full Name</label>
                                     <input type="text" id="full-name"
                                         class="form-control @error('fullname') is-invalid @enderror" placeholder="Full Name"
-                                        name="fullname" value="{{ old('fullname') }}">
+                                        name="fullname" value="{{ old('fullname', $employee->fullname) }}">
                                     @error('fullname')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -54,7 +62,7 @@
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" id="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        placeholder="email@example.com" value="{{ old('email') }}">
+                                        placeholder="email@example.com" value="{{ old('email', $employee->email) }}">
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -65,7 +73,8 @@
                                     <label for="phone_number" class="form-label">Phone Number</label>
                                     <input type="tel" id="phone_number"
                                         class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                        placeholder="123-456-7890" value="{{ old('phone_number') }}">
+                                        placeholder="123-456-7890"
+                                        value="{{ old('phone_number', $employee->phone_number) }}">
                                     @error('phone_number')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -75,7 +84,7 @@
                                 <div class="form-group">
                                     <label for="address" class="form-label">Address</label>
                                     <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address"
-                                        placeholder="Street Address, City, State, Zip Code" rows="3">{{ old('address') }}
+                                        placeholder="Street Address, City, State, Zip Code" rows="3">{{ old('address', $employee->address) }}
                                     </textarea>
                                     @error('address')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -87,8 +96,8 @@
                                     <label for="birth_date" class="form-label">Birth Date</label>
                                     <input type="text" id="birth_date"
                                         class="form-control flatpickr-input-date @error('birth_date') is-invalid @enderror"
-                                        name="birth_date" placeholder="Select date" value="{{ old('birth_date') }}"
-                                        readonly>
+                                        name="birth_date" placeholder="yyyy-mm-dd"
+                                        value="{{ old('birth_date', $employee->birth_date) }}" readonly="readonly">
                                     @error('birth_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -99,7 +108,8 @@
                                     <label for="hire_date" class="form-label">Hire Date</label>
                                     <input type="text" id="hire_date"
                                         class="form-control flatpickr-input-date @error('hire_date') is-invalid @enderror"
-                                        name="hire_date" placeholder="Select date" value="{{ old('hire_date') }}" readonly>
+                                        name="hire_date" placeholder="yyyy-mm-dd"
+                                        value="{{ old('hire_date', $employee->hire_date) }}" readonly="readonly">
                                     @error('hire_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -114,7 +124,7 @@
                                         <option value="">Select Department</option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}"
-                                                {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                                                {{ old('department_id', $employee->department_id) == $department->id ? 'selected' : '' }}>
                                                 {{ $department->name }}</option>
                                         @endforeach
                                     </select>
@@ -131,7 +141,8 @@
                                         <option value="">Select Role</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}"
-                                                {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->title }}
+                                                {{ old('role_id', $employee->role_id) == $role->id ? 'selected' : '' }}>
+                                                {{ $role->title }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -148,7 +159,7 @@
                                         <option value="">Select Status</option>
                                         @foreach ($statusOptions as $status)
                                             <option value="{{ $status }}"
-                                                {{ old('status') == $status ? 'selected' : '' }}>
+                                                {{ old('status', $employee->status) == $status ? 'selected' : '' }}>
                                                 {{ ucfirst(str_replace('_', ' ', $status)) }}
                                             </option>
                                         @endforeach
@@ -163,7 +174,7 @@
                                     <label for="salary" class="form-label">Salary</label>
                                     <input type="number" id="salary"
                                         class="form-control @error('salary') is-invalid @enderror" name="salary"
-                                        placeholder="Salary (USD)">
+                                        placeholder="Salary (USD)" value="{{ old('salary', $employee->salary) }}">
 
                                     @error('salary')
                                         <div class="invalid-feedback">{{ $message }}</div>
