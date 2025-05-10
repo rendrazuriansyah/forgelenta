@@ -114,7 +114,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('presences.index') }}" class='sidebar-link'>
                                 <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
                             </a>
                         </li>
@@ -236,7 +236,7 @@
     <script src="{{ asset('mazer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('mazer/assets/static/js/pages/simple-datatables.js') }}"></script>
     {{-- script untuk handle datatables (entries per page) --}}
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             let table1 = document.querySelector('#table1');
             if (table1) {
@@ -253,7 +253,7 @@
                 }
             }
         });
-    </script>
+    </script> --}}
 
     {{-- script untuk handle date picker --}}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
