@@ -76,7 +76,8 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('tasks.show', ['task' => $task->id]) }}" class="btn btn-info btn-sm">View</a>
+                                        <a href="{{ route('tasks.show', ['task' => $task->id]) }}"
+                                            class="btn btn-info btn-sm">View</a>
                                         <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
 
