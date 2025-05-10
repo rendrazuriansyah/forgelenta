@@ -10,8 +10,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-
-        return view('departments.index', compact('departments'));
+        return view('departments.index', ['departments' => $departments]);
     }
 
     public function create()
@@ -21,39 +20,54 @@ class DepartmentController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-            'status' => 'required|in:active,inactive',
-        ]);
+        try {
+            $data = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string|max:255',
+                'status' => 'required|in:active,inactive',
+            ]);
 
-        $department = Department::create($validatedData);
-
-        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
+            Department::create($data);
+            return redirect()->route('departments.index')->with('success', 'Department created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'error' => 'Error creating department: '.$e->getMessage(),
+            ]);
+        }
     }
 
     public function edit(Department $department)
     {
-        return view('departments.edit', compact('department'));
+        return view('departments.edit', ['department' => $department]);
     }
 
     public function update(Request $request, Department $department)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-            'status' => 'required|in:active,inactive',
-        ]);
+        try {
+            $data = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string|max:255',
+                'status' => 'required|in:active,inactive',
+            ]);
 
-        $department->update($validatedData);
-
-        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
+            $department->update($data);
+            return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'error' => 'Error updating department: '.$e->getMessage(),
+            ]);
+        }
     }
 
     public function destroy(Department $department)
     {
-        $department->delete();
-
-        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
+        try {
+            $department->delete();
+            return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'error' => 'Error deleting department: '.$e->getMessage(),
+            ]);
+        }
     }
 }
