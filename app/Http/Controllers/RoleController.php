@@ -4,54 +4,136 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Facades\Redirect;
 
+/**
+ * Controller to manage roles.
+ */
 class RoleController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('roles.index', [
-            'roles' => Role::all(),
-        ]);
+        // Get all roles
+        $roles = Role::all();
+
+        // Load the view with the roles data
+        return view('roles.index', compact('roles'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
+        // Load the create view
         return view('roles.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-        ]);
+        try {
+            // Validate the request data
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:255',
+            ]);
 
-        $data = Role::create($data);
+            // Create the role
+            Role::create($data);
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+            // Redirect to the index page with a success message
+            return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message
+            return Redirect::back()->withErrors(['error' => 'Failed to create role.']);
+        }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Role $role)
     {
+        // Check if the role exists
+        if (! $role) {
+            return redirect()->route('roles.index')->withErrors(['error' => 'Role not found.']);
+        }
+
+        // Load the edit view with the role data
         return view('roles.edit', compact('role'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Role $role)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-        ]);
+        // Check if the role exists
+        if (! $role) {
+            return redirect()->route('roles.index')->withErrors(['error' => 'Role not found.']);
+        }
 
-        $data = $role->update($data);
+        try {
+            // Validate the request data
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:255',
+            ]);
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+            // Update the role
+            $role->update($data);
+
+            // Redirect to the index page with a success message
+            return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message
+            return Redirect::back()->withErrors(['error' => 'Failed to update role.']);
+        }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Role  $role
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Role $role)
     {
-        $role->delete();
+        // Check if the role exists
+        if (! $role) {
+            return redirect()->route('roles.index')->withErrors(['error' => 'Role not found.']);
+        }
 
-        return view('roles.index', ['success' => 'Role deleted successfully']);
+        try {
+            // Delete the role
+            $role->delete();
+
+            // Redirect to the index page with a success message
+            return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message
+            return Redirect::back()->withErrors(['error' => 'Failed to delete role.']);
+        }
     }
 }
+
