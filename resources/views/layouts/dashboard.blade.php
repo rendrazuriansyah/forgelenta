@@ -96,7 +96,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('departments.index') }}" class='sidebar-link'>
                                 <i class="bi bi-building-fill"></i> <span>Departments</span>
                             </a>
                         </li>
