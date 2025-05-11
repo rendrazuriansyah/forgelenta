@@ -132,7 +132,7 @@
                         </li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
                                 <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
                             </a>
                         </li>
