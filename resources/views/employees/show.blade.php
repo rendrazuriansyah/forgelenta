@@ -47,9 +47,9 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="phone" value="{{ $employee->phone_number }}"
-                                readonly>
+                            <label for="phone_number" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phone_number"
+                                value="{{ $employee->phone_number }}" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="gender" class="form-label">Gender</label>
@@ -58,14 +58,14 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="birthday" class="form-label">Birthday</label>
+                            <label for="birthday" class="form-label">Birth Date</label>
                             <input type="text" class="form-control" id="birthday"
                                 value="{{ $employee->birth_date ? $employee->birth_date->format('d F Y') : '-' }}" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="status" class="form-label">Status</label>
                             <input type="text" class="form-control" id="status"
-                                value="{{ ucfirst(str_replace('_', ' ', $employee->status)) ?? '-' }}" readonly>
+                                value="{{ ucfirst(str_replace('_', ' ', $employee->status)) }}" readonly>
                         </div>
 
                         {{-- Address takes full width --}}
@@ -78,12 +78,12 @@
                         <div class="col-md-6 mb-3">
                             <label for="department" class="form-label">Department</label>
                             <input type="text" class="form-control" id="department"
-                                value="{{ $employee->department->name ?? '-' }}" readonly>
+                                value="{{ $employee->department->name }}" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="role" class="form-label">Role</label>
-                            <input type="text" class="form-control" id="role"
-                                value="{{ $employee->role->title ?? '-' }}" readonly>
+                            <input type="text" class="form-control" id="role" value="{{ $employee->role->title }}"
+                                readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">

@@ -39,15 +39,15 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="employee_id" class="form-label">Employee</label>
                                     <select id="employee_id" class="form-control @error('employee_id') is-invalid @enderror"
                                         placeholder="employee_id" name="employee_id">
-                                        <option value="">Select Employee</option>
+                                        <option value="" selected disabled>Select an employee</option>
                                         @foreach ($employees as $employee)
-                                            <option
-                                                value="{{ $employee->id }} {{ old('employee_id', $presence->employee_id) == $employee->id ? 'selected' : '' }}">
+                                            <option value="{{ $employee->id }}"
+                                                {{ old('employee_id', $presence->employee_id) == $employee->id ? 'selected' : '' }}>
                                                 {{ $employee->fullname }}</option>
                                         @endforeach
                                     </select>
@@ -56,31 +56,31 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="check_in" class="form-label">Check in</label>
                                     <input type="text" id="check_in"
                                         class="form-control flatpickr-input-datetime @error('check_in') is-invalid @enderror"
-                                        name="check_in" placeholder="Select datetime"
+                                        name="check_in" placeholder="Enter Check-in Time"
                                         value="{{ old('check_in', $presence->check_in) }}" readonly>
                                     @error('check_in')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
-                                    <label for="check_out" class="form-label">Check in</label>
+                                    <label for="check_out" class="form-label">Check out</label>
                                     <input type="text" id="check_out"
                                         class="form-control flatpickr-input-datetime @error('check_out') is-invalid @enderror"
-                                        name="check_out" placeholder="Select datetime"
+                                        name="check_out" placeholder="Enter Check-out Time"
                                         value="{{ old('check_out', $presence->check_out) }}" readonly>
                                     @error('check_out')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="date" class="form-label">Date</label>
                                     <input type="text" id="date"
@@ -92,12 +92,12 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="status" class="form-label">Status</label>
                                     <select id="status" class="form-control @error('status') is-invalid @enderror"
                                         placeholder="status" name="status">
-                                        <option value="">Select Status</option>
+                                        <option value="" selected disabled>Select status</option>
                                         <option value="present" {{ $presence->status == 'present' ? 'selected' : '' }}>
                                             Present</option>
                                         <option value="absent" {{ $presence->status == 'absent' ? 'selected' : '' }}>Absent

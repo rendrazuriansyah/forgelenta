@@ -49,10 +49,10 @@
                         <thead class="text-nowrap">
                             <tr>
                                 <th>Employee</th>
-                                <th>Salary ($)</th>
-                                <th>Bonus ($)</th>
-                                <th>Deductions ($)</th>
-                                <th>Net Salary ($)</th>
+                                <th>Salary</th>
+                                <th>Bonus</th>
+                                <th>Deductions</th>
+                                <th>Net Salary</th>
                                 <th>Pay Date</th>
                                 <th>Action</th>
                             </tr>
@@ -62,10 +62,10 @@
                             @foreach ($payrolls as $payroll)
                                 <tr>
                                     <td>{{ $payroll->employee->fullname }}</td>
-                                    <td>{{ number_format($payroll->salary, 2, ',', '.') }}</td>
-                                    <td>{{ number_format($payroll->bonus, 2, ',', '.') }}</td>
-                                    <td>{{ number_format($payroll->deductions, 2, ',', '.') }}</td>
-                                    <td>{{ number_format($payroll->net_salary, 2, ',', '.') }}</td>
+                                    <td>{{ number_format($payroll->salary, 2) }}</td>
+                                    <td>{{ number_format($payroll->bonus, 2) }}</td>
+                                    <td>{{ number_format($payroll->deductions, 2) }}</td>
+                                    <td>{{ number_format($payroll->net_salary, 2) }}</td>
                                     <td>{{ $payroll->pay_date->format('d-m-Y') }}</td>
 
                                     <td>

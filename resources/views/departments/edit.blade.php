@@ -39,29 +39,14 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="name" class="form-label">Name</label>
                                     <input type="text" id="name"
-                                        class="form-control @error('name') is-invalid @enderror" placeholder="HR Department"
-                                        name="name" value="{{ old('name', $department->name) }}">
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        placeholder="Enter Department Name" name="name"
+                                        value="{{ old('name', $department->name) }}">
                                     @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select id="status" class="form-control @error('status') is-invalid @enderror"
-                                        placeholder="status" name="status">
-                                        <option value="">Select Status</option>
-                                        <option value="active" {{ $department->status == 'active' ? 'selected' : '' }}>
-                                            Active</option>
-                                        <option value="inactive" {{ $department->status == 'active' ? 'selected' : '' }}>
-                                            Inactive</option>
-                                    </select>
-                                    @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -70,8 +55,24 @@
                                 <div class="form-group">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description"
-                                        placeholder="Department responsible for human resources activities" rows="3">{{ old('description', $department->description) }}</textarea>
+                                        placeholder="Enter Department Description" rows="3">{{ old('description', $department->description) }}</textarea>
                                     @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select id="status" class="form-control @error('status') is-invalid @enderror"
+                                        placeholder="status" name="status">
+                                        <option value="">Select Status</option>
+                                        <option value="active" {{ $department->status == 'active' ? 'selected' : '' }}>
+                                            Active</option>
+                                        <option value="inactive" {{ $department->status == 'inactive' ? 'selected' : '' }}>
+                                            Inactive</option>
+                                    </select>
+                                    @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

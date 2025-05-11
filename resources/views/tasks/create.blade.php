@@ -35,62 +35,85 @@
                 <div class="card-body">
                     <form action="{{ route('tasks.store') }}" method="post">
                         @csrf
-                        <div class="mb-4">
-                            <label for="" class="form-label">Title</label>
-                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title"
-                                value="{{ old('title') }}" required>
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        @method('post')
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror"
+                                        id="title" name="title" value="{{ old('title') }}"
+                                        placeholder="Enter task title" required>
+                                    @error('title')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                        rows="3" placeholder="Enter task description">{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="assigned_to">Assigned To</label>
+                                    <select class="form-select @error('assigned_to') is-invalid @enderror" id="assigned_to"
+                                        name="assigned_to" required>
+                                        <option value="">Select Employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}"
+                                                {{ old('assigned_to') == $employee->id ? 'selected' : '' }}>
+                                                {{ $employee->fullname }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assigned_to')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="due_datetime">Due Datetime</label>
+                                    <input type="text"
+                                        class="form-control flatpickr-input-datetime @error('due_datetime') is-invalid @enderror"
+                                        id="due_datetime" name="due_datetime" value="{{ old('due_datetime') }}"
+                                        placeholder="Select due datetime" required readonly>
+                                    @error('due_datetime')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                        name="status" required>
+                                        @foreach ($statusOptions as $option)
+                                            <option value="{{ $option }}"
+                                                {{ old('status') == $option ? 'selected' : '' }}>{{ ucfirst($option) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label for="" class="form-label">Description</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="3">{{ old('description') }}</textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">
+                                    Reset
+                                </button>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <label for="" class="form-label">Assigned To</label>
-                            <select class="form-select @error('assigned_to') is-invalid @enderror" name="assigned_to"
-                                required>
-                                <option value="">Select Employee</option>
-                                @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}"
-                                        {{ old('assigned_to') == $employee->id ? 'selected' : '' }}>
-                                        {{ $employee->fullname }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('assigned_to')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-4">
-                            <label for="" class="form-label">Due Datetime</label>
-                            <input type="text"
-                                class="form-control flatpickr-input-datetime @error('due_datetime') is-invalid @enderror"
-                                name="due_datetime" value="{{ old('due_datetime') }}" placeholder="Select datetime"
-                                required readonly>
-                            @error('due_datetime')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-4">
-                            <label for="" class="form-label">Status</label>
-                            <select class="form-select @error('status') is-invalid @enderror" name="status" required>
-                                @foreach ($statusOptions as $option)
-                                    <option value="{{ $option }}" {{ old('status') == $option ? 'selected' : '' }}>
-                                        {{ ucfirst($option) }}</option>
-                                @endforeach
-                            </select>
-                            @error('status')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Create Task</button>
-                        <a href="javascript:history.back()" class="btn btn-secondary">Back to List</a>
                     </form>
                 </div>
             </div>

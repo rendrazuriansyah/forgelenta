@@ -34,16 +34,16 @@
                 </div>
 
                 <div class="card-body">
-                    <form class="form" action="{{ route('roles.store') }}" method="POST">
+                    <form class="form" action="{{ route('roles.store') }}" method="post">
                         @csrf
-                        @method('POST')
+                        @method('post')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" id="title"
-                                        class="form-control @error('title') is-invalid @enderror" placeholder="HR Role"
-                                        name="title" value="{{ old('title') }}">
+                                        class="form-control @error('title') is-invalid @enderror"
+                                        placeholder="e.g. Administrator" name="title" value="{{ old('title') }}">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description"
-                                        placeholder="Role responsible for human resources activities" rows="3">{{ old('description') }}</textarea>
+                                        placeholder="Describe the role's responsibilities and purpose" rows="3">{{ old('description') }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

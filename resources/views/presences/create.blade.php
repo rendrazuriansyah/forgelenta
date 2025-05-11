@@ -11,14 +11,14 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Roles</h3>
+                    <h3>Presences</h3>
                     <p class="text-subtitle text-muted">Handle presences data</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('presences.index') }}">Roles</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('presences.index') }}">Presences</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Create</li>
                         </ol>
                     </nav>
@@ -34,18 +34,19 @@
                 </div>
 
                 <div class="card-body">
-                    <form class="form" action="{{ route('presences.store') }}" method="POST">
+                    <form class="form" action="{{ route('presences.store') }}" method="post">
                         @csrf
-                        @method('POST')
+                        @method('post')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="employee_id" class="form-label">Employee</label>
                                     <select id="employee_id" class="form-control @error('employee_id') is-invalid @enderror"
-                                        placeholder="employee_id" name="employee_id">
-                                        <option value="">Select Employee</option>
+                                        name="employee_id">
+                                        <option value="" selected disabled>Select an employee</option>
                                         @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">
+                                            <option value="{{ $employee->id }}"
+                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
                                                 {{ $employee->fullname }}</option>
                                         @endforeach
                                     </select>
@@ -54,31 +55,31 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="check_in" class="form-label">Check in</label>
                                     <input type="text" id="check_in"
                                         class="form-control flatpickr-input-datetime @error('check_in') is-invalid @enderror"
-                                        name="check_in" placeholder="Select datetime" value="{{ old('check_in') }}"
+                                        name="check_in" placeholder="Enter Check-in Time" value="{{ old('check_in') }}"
                                         readonly>
                                     @error('check_in')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
-                                    <label for="check_out" class="form-label">Check in</label>
+                                    <label for="check_out" class="form-label">Check out</label>
                                     <input type="text" id="check_out"
                                         class="form-control flatpickr-input-datetime @error('check_out') is-invalid @enderror"
-                                        name="check_out" placeholder="Select datetime" value="{{ old('check_out') }}"
+                                        name="check_out" placeholder="Enter Check-out Time" value="{{ old('check_out') }}"
                                         readonly>
                                     @error('check_out')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="date" class="form-label">Date</label>
                                     <input type="text" id="date"
@@ -89,16 +90,20 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="status" class="form-label">Status</label>
                                     <select id="status" class="form-control @error('status') is-invalid @enderror"
-                                        placeholder="status" name="status">
-                                        <option value="">Select Status</option>
-                                        <option value="present">Present</option>
-                                        <option value="absent">Absent</option>
-                                        <option value="late">Late</option>
-                                        <option value="early_leave">Early Leave</option>
+                                        name="status">
+                                        <option value="" selected disabled>Select status</option>
+                                        <option value="present" {{ old('status') == 'present' ? 'selected' : '' }}>Present
+                                        </option>
+                                        <option value="absent" {{ old('status') == 'absent' ? 'selected' : '' }}>Absent
+                                        </option>
+                                        <option value="late" {{ old('status') == 'late' ? 'selected' : '' }}>Late
+                                        </option>
+                                        <option value="early_leave" {{ old('status') == 'early_leave' ? 'selected' : '' }}>
+                                            Early Leave</option>
                                     </select>
                                     @error('status')
                                         <div class="invalid-feedback">{{ $message }}</div>

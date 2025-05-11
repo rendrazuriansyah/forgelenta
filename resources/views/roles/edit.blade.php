@@ -34,16 +34,17 @@
                 </div>
 
                 <div class="card-body">
-                    <form class="form" action="{{ route('roles.update', ['role' => $role->id]) }}" method="POST">
+                    <form class="form" action="{{ route('roles.update', ['role' => $role->id]) }}" method="post">
                         @csrf
-                        @method('PUT')
+                        @method('put')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text" id="title"
-                                        class="form-control @error('title') is-invalid @enderror" placeholder="HR Role"
-                                        name="title" value="{{ old('title', $role->title) }}">
+                                        class="form-control @error('title') is-invalid @enderror"
+                                        placeholder="e.g. Administrator" name="title"
+                                        value="{{ old('title', $role->title) }}">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -53,7 +54,7 @@
                                 <div class="form-group">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description"
-                                        placeholder="Role responsible for human resources activities" rows="3">{{ old('description', $role->description) }}</textarea>
+                                        placeholder="Describe the role's responsibilities and purpose" rows="3">{{ old('description', $role->description) }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -63,7 +64,7 @@
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary me-1 mb-1">
-                                    Submit
+                                    Update Role
                                 </button>
                                 <button type="reset" class="btn btn-light-secondary me-1 mb-1">
                                     Reset
@@ -72,6 +73,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
 
         </section>

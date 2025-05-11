@@ -34,11 +34,11 @@
                 </div>
 
                 <div class="card-body">
-                    <form class="form" action="{{ route('payrolls.store') }}" method="POST">
+                    <form class="form" action="{{ route('payrolls.store') }}" method="post">
                         @csrf
-                        @method('POST')
+                        @method('post')
                         <div class="row">
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="employee_id" class="form-label">Employee</label>
                                     <select id="employee_id" class="form-control @error('employee_id') is-invalid @enderror"
@@ -46,7 +46,8 @@
                                         <option value="">Select Employee</option>
                                         @foreach ($employees as $employee)
                                             <option value="{{ $employee->id }}"
-                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}>
+                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}
+                                                data-salary="{{ $employee->salary }}">
                                                 {{ $employee->fullname }}</option>
                                         @endforeach
                                     </select>
@@ -55,45 +56,58 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="salary" class="form-label">Salary</label>
                                     <input type="number" id="salary"
                                         class="form-control @error('salary') is-invalid @enderror" name="salary"
-                                        placeholder="Input salary" value="{{ old('salary') }}">
+                                        placeholder="Enter Salary Amount" value="{{ old('salary') }}" readonly>
                                     @error('salary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+                                    <script>
+                                        // Add event listener for employee selection
+                                        document.getElementById('employee_id').addEventListener('change', function() {
+                                            const selectedOption = this.options[this.selectedIndex];
+                                            const salary = selectedOption.getAttribute('data-salary');
+
+                                            // Set the salary input value
+                                            document.getElementById('salary').value = salary || '';
+
+                                            // Recalculate net salary
+                                            calculateNetSalary();
+                                        });
+                                    </script>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="bonus" class="form-label">Bonus</label>
                                     <input type="number" id="bonus"
                                         class="form-control @error('bonus') is-invalid @enderror" name="bonus"
-                                        placeholder="Input bonus" value="{{ old('bonus') }}">
+                                        placeholder="Enter Bonus Amount" value="{{ old('bonus') }}">
                                     @error('bonus')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="deductions" class="form-label">Deductions</label>
                                     <input type="number" id="deductions"
                                         class="form-control @error('deductions') is-invalid @enderror" name="deductions"
-                                        placeholder="Input deductions" value="{{ old('deductions') }}">
+                                        placeholder="Enter Deduction Amount" value="{{ old('deductions') }}">
                                     @error('deductions')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="net_salary" class="form-label">Net Salary</label>
                                     <input type="number" id="net_salary"
                                         class="form-control @error('net_salary') is-invalid @enderror" name="net_salary"
-                                        placeholder="0" value="{{ old('net_salary') }}" readonly>
+                                        placeholder="Calculated Net Salary" value="{{ old('net_salary') }}" readonly>
                                     @error('net_salary')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -135,7 +149,7 @@
                                     </script>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="pay_date" class="form-label">Pay Date</label>
                                     <input type="text" id="pay_date"

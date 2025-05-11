@@ -61,7 +61,7 @@
                                 <tr>
                                     <td>{{ $task->title }}</td>
                                     <td>{{ $task->employee->fullname }}</td>
-                                    <td>{{ $task->due_datetime->format('Y-m-d H:i') }}</td>
+                                    <td>{{ $task->due_datetime->format('d-m-Y H:i') }}</td>
 
                                     <td>
                                         @if ($task->status == 'pending')
