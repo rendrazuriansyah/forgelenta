@@ -69,6 +69,8 @@
                                     <td>{{ $payroll->pay_date->format('d-m-Y') }}</td>
 
                                     <td>
+                                        <a href="{{ route('payrolls.show', ['payroll' => $payroll->id]) }}"
+                                            class="btn btn-info btn-sm">Show</a>
                                         <a href="{{ route('payrolls.edit', ['payroll' => $payroll->id]) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
                                         <form action="{{ route('payrolls.destroy', ['payroll' => $payroll->id]) }}"

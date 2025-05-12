@@ -86,6 +86,13 @@ class PayrollController extends Controller
         }
     }
 
+    public function show(Payroll $payroll)
+    {
+        $payroll->load('employee');
+
+        return view('payrolls.show', compact('payroll'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
