@@ -1,0 +1,206 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\LeaveRequest;
+use App\Models\Employee;
+
+/**
+ * Controller for managing leave requests.
+ */
+class LeaveRequestController extends Controller
+{
+    /**
+     * Display a listing of the leave requests.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        // Retrieve all leave requests
+        $leave_requests = LeaveRequest::all();
+
+        // Check if retrieval was successful
+        if ($leave_requests === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve leave requests.');
+        }
+
+        // Return the view with the leave requests data
+        return view('leave-requests.index', compact('leave_requests'));
+    }
+
+    /**
+     * Show the form for creating a new leave request.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        // Retrieve necessary data for the form
+        $employees = Employee::all();
+        $leave_types = LeaveRequest::getLeaveType();
+        $statuses = LeaveRequest::getStatus();
+
+        // Check if retrieval was successful
+        if ($employees === null || $leave_types === null || $statuses === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve employees, leave types, or statuses.');
+        }
+
+        // Return the view with the form data
+        return view('leave-requests.create', compact('employees', 'leave_types', 'statuses'));
+    }
+
+    /**
+     * Store a newly created leave request in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        try {
+            // Validate the incoming request data
+            $data = $request->validate([
+                'employee_id' => 'required|exists:employees,id',
+                'leave_type' => 'required',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+                'status' => 'required|in:pending,approved,cancelled,rejected',
+            ]);
+
+            // Create a new leave request
+            $leave_request = LeaveRequest::create($data);
+
+            // Check if creation was successful
+            if ($leave_request === null) {
+                return redirect()->back()->with('error', 'Failed to create leave request.');
+            }
+
+            // Redirect to the leave requests index with a success message
+            return redirect()->route('leave-requests.index')->with('success', 'Leave request created successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message in case of exception
+            return redirect()->back()->with('error', 'An unexpected error occurred: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Show the form for editing the specified leave request.
+     *
+     * @param  \App\Models\LeaveRequest  $leave_request
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(LeaveRequest $leave_request)
+    {
+        // Check if the leave request exists
+        if ($leave_request === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve leave request.');
+        }
+
+        // Retrieve necessary data for the form
+        $employees = Employee::all();
+        $leave_types = LeaveRequest::getLeaveType();
+        $statuses = LeaveRequest::getStatus();
+
+        // Check if retrieval was successful
+        if ($employees === null || $leave_types === null || $statuses === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve employees, leave types, or statuses.');
+        }
+
+        // Return the view with the form data
+        return view('leave-requests.edit', compact('leave_request', 'employees', 'leave_types', 'statuses'));
+    }
+
+    /**
+     * Update the specified leave request in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\LeaveRequest  $leave_request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, LeaveRequest $leave_request)
+    {
+        try {
+            // Validate the incoming request data
+            $data = $request->validate([
+                'employee_id' => 'required|exists:employees,id',
+                'leave_type' => 'required',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+                'status' => 'required|in:pending,approved,cancelled,rejected',
+            ]);
+
+            // Update the leave request with the validated data
+            $leave_request->update($data);
+
+            // Check if any changes were made
+            if (! $leave_request->wasChanged()) {
+                return redirect()->back()->with('error', 'No changes were made to the leave request.');
+            }
+
+            // Redirect to the leave requests index with a success message
+            return redirect()->route('leave-requests.index')->with('success', 'Leave request updated successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message in case of exception
+            return redirect()->back()->with('error', 'An unexpected error occurred: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified leave request from storage.
+     *
+     * @param  \App\Models\LeaveRequest  $leave_request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(LeaveRequest $leave_request)
+    {
+        // Check if the leave request exists
+        if ($leave_request === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve leave request.');
+        }
+
+        try {
+            // Delete the leave request
+            $leave_request->delete();
+
+            // Redirect to the leave requests index with a success message
+            return redirect()->route('leave-requests.index')->with('success', 'Leave request deleted successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message in case of exception
+            return redirect()->back()->with('error', 'An unexpected error occurred: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Update the status of the specified leave request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\LeaveRequest  $leave_request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request, LeaveRequest $leave_request)
+    {
+        // Check if the leave request exists
+        if ($leave_request === null) {
+            return redirect()->back()->with('error', 'Failed to retrieve leave request.');
+        }
+
+        try {
+            // Validate the 'status' field in the request
+            $data = $request->validate([
+                'status' => 'required|in:pending,approved,cancelled,rejected',
+            ]);
+
+            // Update the leave request with the validated status
+            $leave_request->update($data);
+
+            // Redirect to the leave requests index with a success message
+            return redirect()->route('leave-requests.index')->with('success', 'Leave request status updated successfully.');
+        } catch (\Exception $e) {
+            // Redirect back with an error message in case of exception
+            return redirect()->back()->with('error', 'An unexpected error occurred: '.$e->getMessage());
+        }
+    }
+}
+
