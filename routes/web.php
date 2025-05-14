@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 /*
 |--------------------------------------------------------------------------
 | Resource Route Explained
@@ -39,21 +37,27 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 | Ini bikin code routing lebih ringkas & konsisten ngikutin standar RESTful.
 |
 */
-Route::resource('/tasks', TaskController::class);
-Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
 
-Route::resource('/employees', EmployeeController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
 
-Route::resource('/departments', DepartmentController::class);
+Route::middleware('auth')->group(function () {
 
-Route::resource('/roles', RoleController::class);
+    Route::resource('/departments', DepartmentController::class)->middleware(['role:HR Manager']);
 
-Route::resource('/presences', PresenceController::class);
+    Route::resource('/roles', RoleController::class)->middleware(['role:HR Manager']);
 
-Route::resource('/payrolls', PayrollController::class);
+    Route::resource('/employees', EmployeeController::class)->middleware(['role:HR Manager']);
 
-Route::resource('/leave-requests', LeaveRequestController::class);
-Route::patch('/leave-requests/{leave_request}/status', [LeaveRequestController::class, 'updateStatus'])->name('leave-requests.update-status');
+    Route::resource('/presences', PresenceController::class)->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+
+    Route::resource('/leave-requests', LeaveRequestController::class)->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+    Route::patch('/leave-requests/{leave_request}/status', [LeaveRequestController::class, 'updateStatus'])->name('leave-requests.update-status')->middleware(['role:HR Manager']);
+
+    Route::resource('/tasks', TaskController::class)->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+    Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+
+    Route::resource('/payrolls', PayrollController::class)->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

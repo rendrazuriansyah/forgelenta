@@ -89,59 +89,105 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item active ">
-                            <a href="{{ route('dashboard') }}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
+                        @if (session('role') === 'HR Manager')
+                            <li class="sidebar-item active ">
+                                <a href="{{ route('dashboard') }}" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('departments.index') }}" class='sidebar-link'>
-                                <i class="bi bi-building-fill"></i> <span>Departments</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('departments.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-building-fill"></i> <span>Departments</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('roles.index') }}" class='sidebar-link'>
-                                <i class="bi bi-person-badge-fill"></i> <span>Roles</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('roles.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-person-badge-fill"></i> <span>Roles</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('employees.index') }}" class='sidebar-link'>
-                                <i class="bi bi-people-fill"></i> <span>Employees</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('employees.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-people-fill"></i> <span>Employees</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('presences.index') }}" class='sidebar-link'>
-                                <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('presences.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('leave-requests.index') }}" class='sidebar-link'>
-                                <i class="bi bi-calendar2-minus-fill"></i> <span>Leave Requests</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('leave-requests.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-calendar2-minus-fill"></i> <span>Leave Requests</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('tasks.index') }}" class='sidebar-link'>
-                                <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('tasks.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
+                                </a>
+                            </li>
 
-                        <li class="sidebar-item">
-                            <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
-                                <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
-                            </a>
-                        </li>
+                            <li class="sidebar-item">
+                                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
+                                </a>
+                            </li>
+                        @elseif (in_array(session('role'),
+                                [
+                                    'Software Engineer',
+                                    'Sales Manager',
+                                    'Accountant',
+                                    'Marketing Specialist',
+                                    'Operations Manager',
+                                    'Project Manager',
+                                    'Data Analyst',
+                                ],
+                                true))
+                            <li class="sidebar-item active ">
+                                <a href="{{ route('dashboard') }}" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
+                                </a>
+                            </li>
 
+                            <li class="sidebar-item">
+                                <a href="{{ route('presences.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('leave-requests.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-calendar2-minus-fill"></i> <span>Leave Requests</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('tasks.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
+                                    <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
+                                </a>
+                            </li>
+                        @endif
 
                         <li class="sidebar-title">System</li>
 
                         <li class="sidebar-item">
-                            <a href="index.html" class='sidebar-link'>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
+                            <a href="#" class='sidebar-link'
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
                             </a>
                         </li>
