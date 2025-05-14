@@ -30,9 +30,11 @@
                     <h5 class="card-title">
                         Task Management
                     </h5>
-                    <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus-circle bi-middle"></i> Create Task
-                    </a>
+                    @if (session('role') == 'HR Manager')
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-circle bi-middle"></i> Create Task
+                        </a>
+                    @endif
                 </div>
                 <div class="card-body">
                     @if (session('success'))
@@ -78,16 +80,19 @@
                                     <td>
                                         <a href="{{ route('tasks.show', ['task' => $task->id]) }}"
                                             class="btn btn-info btn-sm">View</a>
-                                        <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
 
-                                        <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}" method="post"
-                                            class="d-inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Are you sure you want to delete this task?')">Delete</button>
-                                        </form>
+                                        @if (session('role') == 'HR Manager')
+                                            <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+
+                                            <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}"
+                                                method="post" class="d-inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this task?')">Delete</button>
+                                            </form>
+                                        @endif
 
                                         {{-- Status Update Forms --}}
                                         @switch($task->status)
@@ -106,94 +111,101 @@
                                                     @method('PATCH')
                                                     <input type="hidden" name="status" value="completed">
                                                     <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
-                                                </form>
+                                                    {{-- </form>
                                                 <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
                                                     method="POST" class="d-inline-block">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="status" value="overdue">
                                                     <button type="submit" class="btn btn-danger btn-sm">Mark as Overdue</button>
-                                                </form>
-                                            @break
+                                                </form> --}}
+                                                @break
 
-                                            @case('in progress')
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="pending">
-                                                    <button type="submit" class="btn btn-secondary btn-sm">Mark as Pending</button>
-                                                </form>
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="completed">
-                                                    <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
-                                                </form>
+                                                @case('in progress')
+                                                    <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                        method="POST" class="d-inline-block">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="status" value="pending">
+                                                        <button type="submit" class="btn btn-secondary btn-sm">Mark as
+                                                            Pending</button>
+                                                    </form>
+                                                    <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                        method="POST" class="d-inline-block">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <input type="hidden" name="status" value="completed">
+                                                        <button type="submit" class="btn btn-success btn-sm">Mark as
+                                                            Completed</button>
+                                                        {{-- </form>
                                                 <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
                                                     method="POST" class="d-inline-block">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input type="hidden" name="status" value="overdue">
                                                     <button type="submit" class="btn btn-danger btn-sm">Mark as Overdue</button>
-                                                </form>
-                                            @break
+                                                </form> --}}
+                                                    @break
 
-                                            @case('completed')
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="pending">
-                                                    <button type="submit" class="btn btn-secondary btn-sm">Mark as
-                                                        Pending</button>
-                                                </form>
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="in progress">
-                                                    <button type="submit" class="btn btn-primary btn-sm">Mark as In
-                                                        Progress</button>
-                                                </form>
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="overdue">
-                                                    <button type="submit" class="btn btn-danger btn-sm">Mark as
-                                                        Overdue</button>
-                                                </form>
-                                            @break
+                                                    @case('completed')
+                                                        <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                            method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="pending">
+                                                            <button type="submit" class="btn btn-secondary btn-sm">Mark as
+                                                                Pending</button>
+                                                        </form>
+                                                        <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                            method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="in progress">
+                                                            <button type="submit" class="btn btn-primary btn-sm">Mark as In
+                                                                Progress</button>
+                                                        </form>
+                                                        {{-- <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                            method="POST" class="d-inline-block">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="status" value="overdue">
+                                                            <button type="submit" class="btn btn-danger btn-sm">Mark as
+                                                                Overdue</button>
+                                                        </form> --}}
+                                                    @break
 
-                                            @case('overdue')
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="pending">
-                                                    <button type="submit" class="btn btn-secondary btn-sm">Mark as
-                                                        Pending</button>
-                                                </form>
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="in progress">
-                                                    <button type="submit" class="btn btn-primary btn-sm">Mark as In
-                                                        Progress</button>
-                                                </form>
-                                                <form action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
-                                                    method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <input type="hidden" name="status" value="completed">
-                                                    <button type="submit" class="btn btn-success btn-sm">Mark as
-                                                        Completed</button>
-                                                </form>
-                                            @break
-                                        @endswitch
+                                                    @case('overdue')
+                                                        @if (session('role') == 'HR Manager')
+                                                            <form
+                                                                action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                                method="POST" class="d-inline-block">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <input type="hidden" name="status" value="pending">
+                                                                <button type="submit" class="btn btn-secondary btn-sm">Mark as
+                                                                    Pending</button>
+                                                            </form>
+                                                            <form
+                                                                action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                                method="POST" class="d-inline-block">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <input type="hidden" name="status" value="in progress">
+                                                                <button type="submit" class="btn btn-primary btn-sm">Mark as In
+                                                                    Progress</button>
+                                                            </form>
+                                                            <form
+                                                                action="{{ route('tasks.update-status', ['task' => $task->id]) }}"
+                                                                method="POST" class="d-inline-block">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <input type="hidden" name="status" value="completed">
+                                                                <button type="submit" class="btn btn-success btn-sm">Mark as
+                                                                    Completed</button>
+                                                            </form>
+                                                        @endif
+                                                    @break
+                                                @endswitch
                                     </td>
                                 </tr>
                             @endforeach

@@ -11,7 +11,11 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::with('employee')->get();
+        if (session('role') == 'HR Manager') {
+            $tasks = Task::with('employee')->get();
+        } else {
+            $tasks = Task::with('employee')->where('assigned_to', session('employee_id'))->get();
+        }
         return view('tasks.index', compact('tasks'));
     }
 
