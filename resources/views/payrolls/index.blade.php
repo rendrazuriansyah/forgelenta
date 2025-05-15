@@ -1,3 +1,4 @@
+{{-- {{ dd($payrolls) }} --}}
 @extends('layouts.dashboard')
 
 @section('content')
@@ -30,9 +31,11 @@
                     <h5 class="card-title">
                         Payroll Management
                     </h5>
-                    <a href="{{ route('payrolls.create') }}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus-circle bi-middle"></i> Create Payroll
-                    </a>
+                    @if (session('role') == 'HR Manager')
+                        <a href="{{ route('payrolls.create') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-circle bi-middle"></i> Create Payroll
+                        </a>
+                    @endif
                 </div>
                 <div class="card-body">
                     @if (session('success'))
@@ -71,17 +74,19 @@
                                     <td>
                                         <a href="{{ route('payrolls.show', ['payroll' => $payroll->id]) }}"
                                             class="btn btn-info btn-sm">Show</a>
-                                        <a href="{{ route('payrolls.edit', ['payroll' => $payroll->id]) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('payrolls.destroy', ['payroll' => $payroll->id]) }}"
-                                            method="post" class="d-inline-block">
-                                            @csrf
-                                            @method('delete')
+                                        @if (session('role') == 'HR Manager')
+                                            <a href="{{ route('payrolls.edit', ['payroll' => $payroll->id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{ route('payrolls.destroy', ['payroll' => $payroll->id]) }}"
+                                                method="post" class="d-inline-block">
+                                                @csrf
+                                                @method('delete')
 
-                                            <button
-                                                onclick="return confirm('Are you sure you want to delete this payroll?')"
-                                                type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                                <button
+                                                    onclick="return confirm('Are you sure you want to delete this payroll?')"
+                                                    type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -21,9 +21,15 @@ class PayrollController extends Controller
      */
     public function index()
     {
+        if (session('role') == 'HR Manager') {
+            $payrolls = Payroll::with('employee')->get();
+        } else {
+            $payrolls = Payroll::with('employee')->where('employee_id', session('employee_id'))->get();
+        }
+
+
         // Retrieve all payrolls with their associated employees
         try {
-            $payrolls = Payroll::with('employee')->get();
             return view('payrolls.index', compact('payrolls'));
         } catch (Exception $e) {
             // Redirect back with an error message if unable to retrieve payrolls
