@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Presence;
+use Illuminate\Support\Carbon;
 
 /**
  * Controller to manage presences.
@@ -18,9 +19,13 @@ class PresenceController extends Controller
      */
     public function index()
     {
-        return view('presences.index', [
-            'presences' => Presence::with('employee')->get(),
-        ]);
+        if (session('role') == 'HR Manager') {
+            $presences = Presence::with('employee')->get();
+        } else {
+            $presences = Presence::with('employee')->where('employee_id', session('employee_id'))->get();
+        }
+
+        return view('presences.index', compact('presences'));
     }
 
     /**
@@ -43,22 +48,44 @@ class PresenceController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'employee_id' => 'required|exists:employees,id',
-            'check_in' => 'required',
-            'check_out' => 'nullable|after:check_in',
-            'date' => 'required',
-            'status' => 'required|in:present,absent,late,early_leave',
-        ]);
+        if (session('role') == 'HR Manager') {
+            $validatedData = $request->validate([
+                'employee_id' => 'required|exists:employees,id',
+                'check_in' => 'required',
+                'check_out' => 'nullable|after:check_in',
+                'date' => 'required',
+                'status' => 'required|in:present,absent,late,early_leave',
+            ]);
+        } else {
+            // Employee Logic
+            $validatedData = $request->validate([ // Tambahkan validasi untuk employee
+                'latitude' => 'required',
+                'longitude' => 'required',
+            ]);
+
+            $validatedData['employee_id'] = session('employee_id');
+            $validatedData['check_in'] = Carbon::now()->format('Y-m-d H:i:s');
+            $validatedData['check_out'] = null;
+            $validatedData['date'] = Carbon::now()->format('Y-m-d');
+            $validatedData['status'] = 'present';
+
+            // Cek kehadiran hari ini (tetap)
+            $existingPresence = Presence::where('employee_id', session('employee_id'))
+                ->whereDate('date', Carbon::now()->toDateString())
+                ->first();
+            if ($existingPresence) {
+                return back()->with('error', 'Presence already exists for today.');
+            }
+        }
 
         try {
             $presence = Presence::create($validatedData);
         } catch (\Exception $e) {
             return back()->with('error', 'Error creating presence: '.$e->getMessage());
         }
-
         return redirect()->route('presences.index')->with('success', 'Presence created successfully.');
     }
+
 
     /**
      * Show the form for editing the specified presence.

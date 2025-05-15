@@ -53,7 +53,9 @@
                                 <th>Check Out</th>
                                 <th>Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                @if (session('role') == 'HR Manager')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody class="text-nowrap">
@@ -62,7 +64,7 @@
                                 <tr>
                                     <td>{{ $presence->employee->fullname }}</td>
                                     <td>{{ $presence->check_in->format('d-m-Y H:i') }}</td>
-                                    <td>{{ $presence->check_out->format('d-m-Y H:i') }}</td>
+                                    <td>{{ $presence->check_out ? $presence->check_out->format('d-m-Y H:i') : '-' }}</td>
                                     <td>{{ $presence->date->format('d-m-Y') }}</td>
                                     <td>
                                         @switch($presence->status)
@@ -84,19 +86,21 @@
                                         @endswitch
                                     </td>
 
-                                    <td>
-                                        <a href="{{ route('presences.edit', ['presence' => $presence->id]) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('presences.destroy', ['presence' => $presence->id]) }}"
-                                            method="post" class="d-inline-block">
-                                            @csrf
-                                            @method('delete')
+                                    @if (session('role') == 'HR Manager')
+                                        <td>
+                                            <a href="{{ route('presences.edit', ['presence' => $presence->id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="{{ route('presences.destroy', ['presence' => $presence->id]) }}"
+                                                method="post" class="d-inline-block">
+                                                @csrf
+                                                @method('delete')
 
-                                            <button
-                                                onclick="return confirm('Are you sure you want to delete this presence?')"
-                                                type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </td>
+                                                <button
+                                                    onclick="return confirm('Are you sure you want to delete this presence?')"
+                                                    type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
