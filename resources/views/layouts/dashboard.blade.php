@@ -90,49 +90,49 @@
                         <li class="sidebar-title">Menu</li>
 
                         @if (session('role') === 'HR Manager')
-                            <li class="sidebar-item active ">
+                            <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                                 <a href="{{ route('dashboard') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('departments') ? 'active' : '' }}">
                                 <a href="{{ route('departments.index') }}" class='sidebar-link'>
                                     <i class="bi bi-building-fill"></i> <span>Departments</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('roles') ? 'active' : '' }}">
                                 <a href="{{ route('roles.index') }}" class='sidebar-link'>
                                     <i class="bi bi-person-badge-fill"></i> <span>Roles</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('employees') ? 'active' : '' }}">
                                 <a href="{{ route('employees.index') }}" class='sidebar-link'>
                                     <i class="bi bi-people-fill"></i> <span>Employees</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('presences') ? 'active' : '' }}">
                                 <a href="{{ route('presences.index') }}" class='sidebar-link'>
                                     <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('leave-requests') ? 'active' : '' }}">
                                 <a href="{{ route('leave-requests.index') }}" class='sidebar-link'>
                                     <i class="bi bi-calendar2-minus-fill"></i> <span>Leave Requests</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('tasks') ? 'active' : '' }}">
                                 <a href="{{ route('tasks.index') }}" class='sidebar-link'>
                                     <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('payrolls') ? 'active' : '' }}">
                                 <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
                                     <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
                                 </a>
@@ -148,31 +148,31 @@
                                     'Data Analyst',
                                 ],
                                 true))
-                            <li class="sidebar-item active ">
+                            <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                                 <a href="{{ route('dashboard') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('presences') ? 'active' : '' }}">
                                 <a href="{{ route('presences.index') }}" class='sidebar-link'>
                                     <i class="bi bi-calendar2-check-fill"></i> <span>Presences</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('leave-requests') ? 'active' : '' }}">
                                 <a href="{{ route('leave-requests.index') }}" class='sidebar-link'>
                                     <i class="bi bi-calendar2-minus-fill"></i> <span>Leave Requests</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('tasks') ? 'active' : '' }}">
                                 <a href="{{ route('tasks.index') }}" class='sidebar-link'>
                                     <i class="bi bi-check-circle-fill"></i> <span>Tasks</span>
                                 </a>
                             </li>
 
-                            <li class="sidebar-item">
+                            <li class="sidebar-item {{ request()->is('payrolls') ? 'active' : '' }}">
                                 <a href="{{ route('payrolls.index') }}" class='sidebar-link'>
                                     <i class="bi bi-currency-exchange"></i> <span>Payrolls</span>
                                 </a>
@@ -192,30 +192,6 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
-                                <span>Components</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="component-accordion.html" class="submenu-link">Accordion</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Alert</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
-
-
                         <li class="sidebar-title">Raise Support</li>
 
                         <li class="sidebar-item  ">
@@ -223,26 +199,18 @@
                                 <i class="bi bi-life-preserver"></i>
                                 <span>Documentation</span>
                             </a>
-
-
                         </li>
-
                         <li class="sidebar-item  ">
                             <a href="https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md" class='sidebar-link'>
                                 <i class="bi bi-puzzle"></i>
                                 <span>Contribute</span>
                             </a>
-
-
                         </li>
-
                         <li class="sidebar-item  ">
                             <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
                                 <i class="bi bi-cash"></i>
                                 <span>Donate</span>
                             </a>
-
-
                         </li>
 
                     </ul>
