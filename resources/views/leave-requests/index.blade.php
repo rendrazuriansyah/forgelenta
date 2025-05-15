@@ -53,7 +53,9 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                @if (session('role') == 'HR Manager')
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody class="text-nowrap">
@@ -76,61 +78,63 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        <a href="{{ route('leave-requests.edit', ['leave_request' => $leave_request->id]) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <form
-                                            action="{{ route('leave-requests.destroy', ['leave_request' => $leave_request->id]) }}"
-                                            method="post" class="d-inline-block">
-                                            @csrf
-                                            @method('delete')
+                                    @if (session('role') == 'HR Manager')
+                                        <td>
+                                            <a href="{{ route('leave-requests.edit', ['leave_request' => $leave_request->id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            <form
+                                                action="{{ route('leave-requests.destroy', ['leave_request' => $leave_request->id]) }}"
+                                                method="post" class="d-inline-block">
+                                                @csrf
+                                                @method('delete')
 
-                                            <button
-                                                onclick="return confirm('Are you sure you want to delete this Leave Request?')"
-                                                type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                                <button
+                                                    onclick="return confirm('Are you sure you want to delete this Leave Request?')"
+                                                    type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
 
-                                        <form
-                                            action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
-                                            method="post" class="d-inline-block"
-                                            {{ $leave_request->status == 'approved' ? 'hidden' : '' }}>
-                                            @csrf
-                                            @method('patch')
-                                            <input type="hidden" name="status" value="approved">
-                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        </form>
+                                            <form
+                                                action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
+                                                method="post" class="d-inline-block"
+                                                {{ $leave_request->status == 'approved' ? 'hidden' : '' }}>
+                                                @csrf
+                                                @method('patch')
+                                                <input type="hidden" name="status" value="approved">
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
 
-                                        <form
-                                            action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
-                                            method="post" class="d-inline-block"
-                                            {{ $leave_request->status == 'pending' ? 'hidden' : '' }}>
-                                            @csrf
-                                            @method('patch')
-                                            <input type="hidden" name="status" value="pending">
-                                            <button type="submit" class="btn btn-warning btn-sm">Pending</button>
-                                        </form>
+                                            <form
+                                                action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
+                                                method="post" class="d-inline-block"
+                                                {{ $leave_request->status == 'pending' ? 'hidden' : '' }}>
+                                                @csrf
+                                                @method('patch')
+                                                <input type="hidden" name="status" value="pending">
+                                                <button type="submit" class="btn btn-warning btn-sm">Pending</button>
+                                            </form>
 
-                                        <form
-                                            action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
-                                            method="post" class="d-inline-block"
-                                            {{ $leave_request->status == 'rejected' ? 'hidden' : '' }}>
-                                            @csrf
-                                            @method('patch')
-                                            <input type="hidden" name="status" value="rejected">
-                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                        </form>
+                                            <form
+                                                action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
+                                                method="post" class="d-inline-block"
+                                                {{ $leave_request->status == 'rejected' ? 'hidden' : '' }}>
+                                                @csrf
+                                                @method('patch')
+                                                <input type="hidden" name="status" value="rejected">
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                            </form>
 
-                                        <form
-                                            action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
-                                            method="post" class="d-inline-block"
-                                            {{ $leave_request->status == 'cancelled' ? 'hidden' : '' }}>
-                                            @csrf
-                                            @method('patch')
-                                            <input type="hidden" name="status" value="cancelled">
-                                            <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
-                                        </form>
+                                            <form
+                                                action="{{ route('leave-requests.update-status', ['leave_request' => $leave_request->id]) }}"
+                                                method="post" class="d-inline-block"
+                                                {{ $leave_request->status == 'cancelled' ? 'hidden' : '' }}>
+                                                @csrf
+                                                @method('patch')
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                            </form>
 
-                                    </td>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

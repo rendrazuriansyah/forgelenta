@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LeaveRequest;
 use App\Models\Employee;
+use Illuminate\Support\Carbon;
 
 /**
  * Controller for managing leave requests.
@@ -18,8 +19,12 @@ class LeaveRequestController extends Controller
      */
     public function index()
     {
-        // Retrieve all leave requests
-        $leave_requests = LeaveRequest::all();
+        if (session('role') == 'HR Manager') {
+            // Retrieve all leave requests
+            $leave_requests = LeaveRequest::all();
+        } else {
+            $leave_requests = LeaveRequest::with('employee')->where('employee_id', session('employee_id'))->get();
+        }
 
         // Check if retrieval was successful
         if ($leave_requests === null) {
@@ -59,7 +64,7 @@ class LeaveRequestController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        if (session('role') == 'HR Manager') {
             // Validate the incoming request data
             $data = $request->validate([
                 'employee_id' => 'required|exists:employees,id',
@@ -68,7 +73,19 @@ class LeaveRequestController extends Controller
                 'end_date' => 'required|date',
                 'status' => 'required|in:pending,approved,cancelled,rejected',
             ]);
+        } else {
+            $data = $request->validate([
+                'leave_type' => 'required',
+                'end_date' => 'required|date',
+                'status' => 'pending',
+            ]);
 
+            $data['employee_id'] = session('employee_id');
+            $data['start_date'] = Carbon::now()->format('Y-m-d');
+        }
+
+
+        try {
             // Create a new leave request
             $leave_request = LeaveRequest::create($data);
 

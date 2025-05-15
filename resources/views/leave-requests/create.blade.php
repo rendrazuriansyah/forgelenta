@@ -39,24 +39,27 @@
                         @csrf
                         @method('post')
                         <div class="row">
-                            <div class="col-md-12 col-12">
-                                <div class="form-group">
-                                    <label for="employee_id" class="form-label">Employee</label>
-                                    <select id="employee_id" class="form-control @error('employee_id') is-invalid @enderror"
-                                        name="employee_id">
-                                        <option value="">Select Employee</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}"
-                                                {{ old('employee_id') == $employee->id ? 'selected' : '' }}
-                                                data-salary="{{ $employee->salary }}">
-                                                {{ $employee->fullname }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employee_id')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            @if (session('role') == 'HR Manager')
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label for="employee_id" class="form-label">Employee</label>
+                                        <select id="employee_id"
+                                            class="form-control @error('employee_id') is-invalid @enderror"
+                                            name="employee_id">
+                                            <option value="">Select Employee</option>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                    {{ old('employee_id') == $employee->id ? 'selected' : '' }}
+                                                    data-salary="{{ $employee->salary }}">
+                                                    {{ $employee->fullname }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('employee_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="col-md-12 col-12">
                                 <div class="form-group">
                                     <label for="leave_type" class="form-label">Leave Type</label>
@@ -97,23 +100,25 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-12 col-12">
-                                <div class="form-group">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select id="status" class="form-control @error('status') is-invalid @enderror"
-                                        name="status">
-                                        <option value="">Select Status</option>
-                                        @foreach ($statuses as $status)
-                                            <option value="{{ $status }}"
-                                                {{ old('status') == $status ? 'selected' : '' }}>
-                                                {{ $status }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('status')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            @if (session('role') == 'HR Manager')
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label for="status" class="form-label">Status</label>
+                                        <select id="status" class="form-control @error('status') is-invalid @enderror"
+                                            name="status">
+                                            <option value="">Select Status</option>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status }}"
+                                                    {{ old('status') == $status ? 'selected' : '' }}>
+                                                    {{ $status }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('status')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end">
