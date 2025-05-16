@@ -108,74 +108,47 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Latest Tasks</h4>
+                                <h4>5 Latest Tasks</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-lg">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Comment</th>
+                                                <th>Assigned to</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="{{ asset('mazer/assets/compiled/jpg/5.jpg') }}">
+                                            @foreach ($tasks as $task)
+                                                <tr>
+                                                    <td class="col-4">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar avatar-md">
+                                                                <img src="https://ui-avatars.com/api/?name={{ $task->employee->fullname }}&color=333333&background=FFFFFF"
+                                                                    style="border: 1px solid #333333">
+                                                            </div>
+                                                            <p class="font-bold ms-3 mb-0">{{ $task->employee->fullname }}
+                                                            </p>
                                                         </div>
-                                                        <p class="font-bold ms-3 mb-0">Si Cantik</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class=" mb-0">Congratulations on your graduation!</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="{{ asset('mazer/assets/compiled/jpg/2.jpg') }}">
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Si Ganteng</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class=" mb-0">Wow amazing design! Can you make another
-                                                        tutorial for
-                                                        this design?</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="{{ asset('mazer/assets/compiled/jpg/8.jpg') }}">
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Singh Eknoor</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class=" mb-0">What a stunning design! You are so
-                                                        talented and creative!</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="col-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-md">
-                                                            <img src="{{ asset('mazer/assets/compiled/jpg/3.jpg') }}">
-                                                        </div>
-                                                        <p class="font-bold ms-3 mb-0">Rani Jhadav</p>
-                                                    </div>
-                                                </td>
-                                                <td class="col-auto">
-                                                    <p class=" mb-0">I love your design! It’s so beautiful and
-                                                        unique! How did you learn to do this?</p>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        <p class=" mb-0">{{ $task->title }}</p>
+                                                    </td>
+                                                    <td class="col-auto">
+                                                        @if ($task->status == 'pending')
+                                                            <span class="badge bg-secondary">Pending</span>
+                                                        @elseif ($task->status == 'in progress')
+                                                            <span class="badge bg-primary">In Progress</span>
+                                                        @elseif ($task->status == 'completed')
+                                                            <span class="badge bg-success">Completed</span>
+                                                        @elseif ($task->status == 'overdue')
+                                                            <span class="badge bg-danger">Overdue</span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -200,7 +173,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Visitors Profile</h4>
+                        <h4>Presences Profile</h4>
                     </div>
                     <div class="card-body">
                         <div id="chart-visitors-profile"></div>

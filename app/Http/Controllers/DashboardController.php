@@ -20,7 +20,7 @@ class DashboardController extends Controller
         $payroll = Payroll::count();
         $presence = Presence::count();
 
-        $tasks = Task::all();
+        $tasks = Task::latest()->limit(5)->get();
 
         return view('dashboard.index', compact('department', 'employee', 'payroll', 'presence', 'tasks', 'me'));
     }

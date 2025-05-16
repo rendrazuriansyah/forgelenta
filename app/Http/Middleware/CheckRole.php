@@ -26,6 +26,10 @@ class CheckRole
             abort(403, 'Unauthorized action.');
         }
 
+        if (session('employee_id') == null) {
+            abort(403, 'Unauthorized action.');
+        }
+
         return $next($request);
     }
 }
