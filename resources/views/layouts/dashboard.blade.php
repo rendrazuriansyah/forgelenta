@@ -194,21 +194,10 @@
                         <li class="sidebar-title">Raise Support</li>
 
                         <li class="sidebar-item  ">
-                            <a href="https://zuramai.github.io/mazer/docs" class='sidebar-link'>
-                                <i class="bi bi-life-preserver"></i>
-                                <span>Documentation</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item  ">
-                            <a href="https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md" class='sidebar-link'>
+                            <a href="https://github.com/rendrazuriansyah/forgelenta/blob/main/CONTRIBUTING.md"
+                                class='sidebar-link'>
                                 <i class="bi bi-puzzle"></i>
                                 <span>Contribute</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item  ">
-                            <a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'>
-                                <i class="bi bi-cash"></i>
-                                <span>Donate</span>
                             </a>
                         </li>
 
@@ -255,7 +244,7 @@
                     // Extract unique months and years
                     const labels = [...new Set(data.map(item =>
                         `${new Date(item.year, item.month - 1).toLocaleString('default', { month: 'long' })}, ${item.year}`
-                        ))];
+                    ))];
                     const datasetData = data.map(item => item.total);
 
                     if (myBar) {
