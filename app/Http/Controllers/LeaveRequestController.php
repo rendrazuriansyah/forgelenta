@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\LeaveRequest;
 use App\Models\Employee;
+use App\Models\LeaveRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 /**
@@ -59,7 +59,6 @@ class LeaveRequestController extends Controller
     /**
      * Store a newly created leave request in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -84,7 +83,6 @@ class LeaveRequestController extends Controller
             $data['start_date'] = Carbon::now()->format('Y-m-d');
         }
 
-
         try {
             // Create a new leave request
             $leave_request = LeaveRequest::create($data);
@@ -105,7 +103,6 @@ class LeaveRequestController extends Controller
     /**
      * Show the form for editing the specified leave request.
      *
-     * @param  \App\Models\LeaveRequest  $leave_request
      * @return \Illuminate\Http\Response
      */
     public function edit(LeaveRequest $leave_request)
@@ -132,8 +129,6 @@ class LeaveRequestController extends Controller
     /**
      * Update the specified leave request in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LeaveRequest  $leave_request
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, LeaveRequest $leave_request)
@@ -167,7 +162,6 @@ class LeaveRequestController extends Controller
     /**
      * Remove the specified leave request from storage.
      *
-     * @param  \App\Models\LeaveRequest  $leave_request
      * @return \Illuminate\Http\Response
      */
     public function destroy(LeaveRequest $leave_request)
@@ -192,8 +186,6 @@ class LeaveRequestController extends Controller
     /**
      * Update the status of the specified leave request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LeaveRequest  $leave_request
      * @return \Illuminate\Http\Response
      */
     public function updateStatus(Request $request, LeaveRequest $leave_request)
@@ -220,4 +212,3 @@ class LeaveRequestController extends Controller
         }
     }
 }
-

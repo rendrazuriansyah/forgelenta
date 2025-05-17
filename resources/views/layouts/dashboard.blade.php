@@ -245,6 +245,75 @@
     {{-- Presence Chart --}}
     <script src="{{ asset('mazer/assets/extensions/chart.js/chart.umd.js') }}"></script>
     <script>
+        let myBar; // Declare myBar outside the function to make it accessible globally
+        var ctxBar = document.getElementById('chart-presence').getContext('2d');
+
+        function updateData() {
+            fetch('/dashboard/presence')
+                .then(response => response.json())
+                .then(data => {
+                    // Extract unique months and years
+                    const labels = [...new Set(data.map(item =>
+                        `${new Date(item.year, item.month - 1).toLocaleString('default', { month: 'long' })}, ${item.year}`
+                        ))];
+                    const datasetData = data.map(item => item.total);
+
+                    if (myBar) {
+                        myBar.destroy(); // Destroy the existing chart
+                    }
+
+                    myBar = new Chart(ctxBar, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Total',
+                                data: datasetData,
+                                backgroundColor: 'rgba(63, 82, 227, 1)',
+                                borderColor: '#57CAEB',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Total Presences'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Month'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Latest Presence'
+                                },
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching presence data:', error);
+                    // Handle error (e.g., display an error message)
+                });
+        }
+
+        // Initial data load
+        updateData();
+
+        // Optional: Refresh data periodically (e.g., every 60 seconds)
+        // setInterval(updateData, 60000);
+    </script>
+    </script>
+    {{-- <script>
         var ctxBar = document.getElementById('chart-presence').getContext('2d');
         var myBar = new Chart(ctxBar, {
             type: 'bar',
@@ -285,7 +354,7 @@
         }
 
         updateData();
-    </script>
+    </script> --}}
 
     {{-- Ensure the dashboard.js is loaded after the apexcharts.min.js --}}
     <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script>

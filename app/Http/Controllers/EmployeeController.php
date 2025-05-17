@@ -45,7 +45,6 @@ class EmployeeController extends Controller
     /**
      * Store a newly created employee in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -81,7 +80,6 @@ class EmployeeController extends Controller
     /**
      * Display the specified employee.
      *
-     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function show(Employee $employee)
@@ -103,7 +101,6 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified employee.
      *
-     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function edit(Employee $employee)
@@ -127,8 +124,6 @@ class EmployeeController extends Controller
     /**
      * Update the specified employee in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
@@ -164,7 +159,6 @@ class EmployeeController extends Controller
     /**
      * Remove the specified employee from storage.
      *
-     * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee)
@@ -183,4 +177,3 @@ class EmployeeController extends Controller
         }
     }
 }
-

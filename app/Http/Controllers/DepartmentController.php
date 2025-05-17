@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Department;
+use Illuminate\Http\Request;
 
 /**
  * DepartmentController
- *
- * @package App\Http\Controllers
  */
 class DepartmentController extends Controller
 {
@@ -20,6 +18,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
+
         return view('departments.index', ['departments' => $departments]);
     }
 
@@ -36,7 +35,6 @@ class DepartmentController extends Controller
     /**
      * Store a newly created department in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,6 +47,7 @@ class DepartmentController extends Controller
             ]);
 
             Department::create($data);
+
             return redirect()->route('departments.index')->with('success', 'Department created successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([
@@ -60,7 +59,6 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified department.
      *
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function edit(Department $department)
@@ -71,8 +69,6 @@ class DepartmentController extends Controller
     /**
      * Update the specified department in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Department $department)
@@ -85,6 +81,7 @@ class DepartmentController extends Controller
             ]);
 
             $department->update($data);
+
             return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([
@@ -96,13 +93,13 @@ class DepartmentController extends Controller
     /**
      * Remove the specified department from storage.
      *
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function destroy(Department $department)
     {
         try {
             $department->delete();
+
             return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([
@@ -111,4 +108,3 @@ class DepartmentController extends Controller
         }
     }
 }
-

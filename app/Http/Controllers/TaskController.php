@@ -16,6 +16,7 @@ class TaskController extends Controller
         } else {
             $tasks = Task::with('employee')->where('assigned_to', session('employee_id'))->get();
         }
+
         return view('tasks.index', compact('tasks'));
     }
 
@@ -23,6 +24,7 @@ class TaskController extends Controller
     {
         $employees = Employee::all();
         $statusOptions = Task::getStatusOptions();
+
         return view('tasks.create', compact('employees', 'statusOptions'));
     }
 
@@ -38,9 +40,11 @@ class TaskController extends Controller
 
         try {
             Task::create($validatedData);
+
             return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
         } catch (\Exception $e) {
             Log::error('Error creating task: '.$e->getMessage());
+
             return redirect()->back()->withErrors(['error' => 'Task creation failed.']);
         }
     }
@@ -49,6 +53,7 @@ class TaskController extends Controller
     {
         $employees = Employee::all();
         $statusOptions = Task::getStatusOptions();
+
         return view('tasks.edit', compact('task', 'employees', 'statusOptions'));
     }
 
@@ -64,9 +69,11 @@ class TaskController extends Controller
 
         try {
             $task->update($validatedData);
+
             return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
         } catch (\Exception $e) {
             Log::error('Error updating task: '.$e->getMessage());
+
             return redirect()->back()->withErrors(['error' => 'Task update failed.']);
         }
     }
@@ -79,9 +86,11 @@ class TaskController extends Controller
 
         try {
             $task->update($validatedData);
+
             return redirect()->route('tasks.index')->with('success', 'Task status updated successfully.');
         } catch (\Exception $e) {
             Log::error('Error updating task status: '.$e->getMessage());
+
             return redirect()->back()->withErrors(['error' => 'Task status update failed.']);
         }
     }
@@ -90,9 +99,11 @@ class TaskController extends Controller
     {
         try {
             $task->delete();
+
             return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
         } catch (\Exception $e) {
             Log::error('Error deleting task: '.$e->getMessage());
+
             return redirect()->back()->withErrors(['error' => 'Task deletion failed.']);
         }
     }
@@ -102,4 +113,3 @@ class TaskController extends Controller
         return view('tasks.show', compact('task'));
     }
 }
-

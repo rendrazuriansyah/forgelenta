@@ -35,7 +35,7 @@ class LeaveRequest extends Model
             'Vacation',
             'Personal Leave',
             'Maternity Leave',
-            'Paternity Leave'
+            'Paternity Leave',
         ];
     }
 
@@ -45,7 +45,7 @@ class LeaveRequest extends Model
             'pending',
             'approved',
             'rejected',
-            'cancelled'
+            'cancelled',
         ];
     }
 }

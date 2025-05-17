@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\PresenceController;
-use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveRequestController;
+use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +40,8 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
-    Route::get('/dashboard/presence', [DashboardController::class, 'presence'])->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+    // Route::get('/dashboard/presence', [DashboardController::class, 'presence'])->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+    Route::get('/dashboard/presence', [DashboardController::class, 'presence'])->name('dashboard.presence')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
 
     Route::resource('/departments', DepartmentController::class)->middleware(['role:HR Manager']);
 

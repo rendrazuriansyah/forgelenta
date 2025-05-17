@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use Illuminate\Http\Request;
 use App\Models\Presence;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 /**
@@ -43,7 +43,6 @@ class PresenceController extends Controller
     /**
      * Store a newly created presence in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -83,14 +82,13 @@ class PresenceController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Error creating presence: '.$e->getMessage());
         }
+
         return redirect()->route('presences.index')->with('success', 'Presence created successfully.');
     }
-
 
     /**
      * Show the form for editing the specified presence.
      *
-     * @param  \App\Models\Presence  $presence
      * @return \Illuminate\Http\Response
      */
     public function edit(Presence $presence)
@@ -107,8 +105,6 @@ class PresenceController extends Controller
     /**
      * Update the specified presence in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Presence  $presence
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Presence $presence)
@@ -137,7 +133,6 @@ class PresenceController extends Controller
     /**
      * Remove the specified presence from storage.
      *
-     * @param  \App\Models\Presence  $presence
      * @return \Illuminate\Http\Response
      */
     public function destroy(Presence $presence)
@@ -155,4 +150,3 @@ class PresenceController extends Controller
         return redirect()->route('presences.index')->with('success', 'Presence deleted successfully.');
     }
 }
-

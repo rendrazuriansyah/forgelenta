@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payroll;
 use App\Models\Employee;
+use App\Models\Payroll;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
 
 /**
  * Controller to manage payrolls.
@@ -26,7 +26,6 @@ class PayrollController extends Controller
         } else {
             $payrolls = Payroll::with('employee')->where('employee_id', session('employee_id'))->get();
         }
-
 
         // Retrieve all payrolls with their associated employees
         try {
@@ -47,6 +46,7 @@ class PayrollController extends Controller
         // Retrieve all employees to be used in the create form
         try {
             $employees = Employee::all();
+
             return view('payrolls.create', compact('employees'));
         } catch (Exception $e) {
             // Redirect back with an error message if unable to retrieve employees
@@ -57,7 +57,6 @@ class PayrollController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -102,7 +101,6 @@ class PayrollController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Payroll  $payroll
      * @return \Illuminate\Http\Response
      */
     public function edit(Payroll $payroll)
@@ -110,6 +108,7 @@ class PayrollController extends Controller
         // Retrieve all employees to be used in the edit form
         try {
             $employees = Employee::all();
+
             return view('payrolls.edit', compact('payroll', 'employees'));
         } catch (ModelNotFoundException $e) {
             // Redirect to the index page with an error message if the payroll is not found
@@ -123,8 +122,6 @@ class PayrollController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Payroll  $payroll
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Payroll $payroll)
@@ -162,7 +159,6 @@ class PayrollController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Payroll  $payroll
      * @return \Illuminate\Http\Response
      */
     public function destroy(Payroll $payroll)
@@ -179,4 +175,3 @@ class PayrollController extends Controller
         }
     }
 }
-
