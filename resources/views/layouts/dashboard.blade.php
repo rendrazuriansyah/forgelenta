@@ -242,6 +242,51 @@
     <!-- Need: Apexcharts -->
     <script src="{{ asset('mazer/assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
 
+    {{-- Presence Chart --}}
+    <script src="{{ asset('mazer/assets/extensions/chart.js/chart.umd.js') }}"></script>
+    <script>
+        var ctxBar = document.getElementById('chart-presence').getContext('2d');
+        var myBar = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Total',
+                    data: [],
+                    backgroundColor: 'rgba(63, 82, 227, 1)',
+                    borderColor: '#57CAEB',
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    text: 'Latest Presence'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function updateData() {
+            fetch('/dashboard/presence')
+                .then(response => response.json())
+                .then((output) => {
+                    myBar.data.datasets = [{
+                        label: 'Total',
+                        data: output,
+                        backgroundColor: 'rgba(63, 82, 227, 1)',
+                        borderColor: '#57CAEB',
+                    }];
+                    myBar.update();
+                });
+        }
+
+        updateData();
+    </script>
+
     {{-- Ensure the dashboard.js is loaded after the apexcharts.min.js --}}
     <script src="{{ asset('mazer/assets/static/js/pages/dashboard.js') }}"></script>
 

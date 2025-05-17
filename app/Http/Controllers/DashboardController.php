@@ -24,4 +24,23 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('department', 'employee', 'payroll', 'presence', 'tasks', 'me'));
     }
+
+    public function presence()
+    {
+        $data = Presence::where('status', 'present')
+            ->selectRaw('MONTH(date) as month, YEAR(date) as year, COUNT(*) as total_present')
+            ->groupBy('year', 'month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        $temp = [];
+        $i = 0;
+
+        foreach ($data as $item) {
+            $temp[$i] = $item->total_present;
+            $i++;
+        }
+
+        return response()->json($temp);
+    }
 }

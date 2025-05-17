@@ -38,9 +38,9 @@ Route::get('/', function () {
 |
 */
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
-
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
+    Route::get('/dashboard/presence', [DashboardController::class, 'presence'])->middleware(['role:HR Manager,Software Engineer,Sales Manager,Accountant,Marketing Specialist,Operations Manager,Project Manager,Data Analyst']);
 
     Route::resource('/departments', DepartmentController::class)->middleware(['role:HR Manager']);
 
